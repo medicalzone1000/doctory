@@ -22,7 +22,7 @@ const App = (() => {
     { id: "governorates", icon: "📍", label: "المحافظات" },
     { id: "content", icon: "📝", label: "محتوى الموقع" },
     { id: "design", icon: "🎨", label: "التصميم والألوان" },
-    { id: "settings", icon: "⚙️", label: "GitHub والإعدادات" },
+    { id: "settings", icon: "⚙️", label: "الإعدادات" },
   ];
 
   /* ---------- UI helpers ---------- */
@@ -72,8 +72,8 @@ const App = (() => {
     $("#loginScreen").hidden = !!session;
     $("#adminShell").hidden = !session;
     if (session) {
-      $("#sessionUser").textContent = session.username;
-      $("#sessionRepo").textContent = `${session.owner}/${session.repo} (${session.branch})`;
+      $("#sessionUser").textContent = session.displayName || "—";
+      $("#sessionRepo").textContent = "";
     }
   }
 
@@ -85,14 +85,12 @@ const App = (() => {
     try {
       await GitHubAPI.validateAndConnect({
         token: $("#ghToken").value,
-        owner: $("#ghOwner").value,
-        repo: $("#ghRepo").value,
-        branch: $("#ghBranch").value || "main",
+        displayName: $("#ghRepo").value,
       });
       $("#ghToken").value = "";
       renderLogin();
       await bootstrapData();
-      toast("تم الاتصال بنجاح", "success");
+      toast("تم تسجيل الدخول بنجاح", "success");
     } catch (err) {
       toast(err.message, "error");
     } finally {
@@ -117,7 +115,7 @@ const App = (() => {
       const missing = Object.entries(data).filter(([, v]) => v == null).map(([k]) => k);
       if (missing.length) {
         const useDefaults = confirm(
-          `ملفات JSON غير موجودة على GitHub (${missing.join(", ")}).\n\nهل تريد إنشاءها الآن من البيانات الافتراضية؟`
+          `بعض البيانات غير موجودة (${missing.join(", ")}).\n\nهل تريد إنشاءها الآن من البيانات الافتراضية؟`
         );
         if (useDefaults) {
           await initializeRepoData();
@@ -147,7 +145,7 @@ const App = (() => {
     state.data = refreshed.data;
     state.shas = refreshed.shas;
     markSaved();
-    toast("تم إنشاء ملفات JSON على GitHub", "success");
+    toast("تم إنشاء البيانات الافتراضية", "success");
   }
 
   async function saveAll() {
@@ -162,7 +160,7 @@ const App = (() => {
       const refreshed = await GitHubAPI.loadAllData();
       state.shas = refreshed.shas;
       markSaved();
-      toast("تم النشر على GitHub بنجاح", "success");
+      toast("تم النشر بنجاح", "success");
     } catch (err) {
       toast(err.message, "error");
     } finally {
@@ -219,7 +217,7 @@ const App = (() => {
       <div class="page-head">
         <div>
           <h1>لوحة التحكم</h1>
-          <p>إدارة شاملة لمنصة Doctory — البيانات تُحفظ على GitHub كملفات JSON</p>
+          <p>إدارة شاملة لمنصة Doctory — البيانات تُحفظ بأمان على المنصة</p>
         </div>
         <a href="${GitHubAPI.getPublicSiteUrl()}" target="_blank" rel="noopener" class="btn btn--ghost">معاينة الموقع ↗</a>
       </div>
@@ -242,9 +240,8 @@ const App = (() => {
         <div class="panel">
           <h3>ملاحظات</h3>
           <ul class="notes-list">
-            <li>التوكن لا يُحفظ في ملفات الموقع — فقط في جلسة المتصفح.</li>
-            <li>بعد الحفظ، قد يستغرق GitHub Pages دقيقة لتحديث الموقع.</li>
-            <li>تأكد أن التوكن Classic يملك صلاحية <code>repo</code>.</li>
+            <li>الرقم التعريفي لا يُحفظ إلا في جلسة المتصفح الحالية.</li>
+            <li>بعد الحفظ، قد يستغرق الموقع دقيقة لتحديث المحتوى.</li>
           </ul>
         </div>
       </div>`;
@@ -343,14 +340,42 @@ const App = (() => {
         <label class="field field--check"><input type="checkbox" name="availableToday" ${doc.availableToday ? "checked" : ""}> متاح اليوم</label>
         <label class="field field--check"><input type="checkbox" name="availableTomorrow" ${doc.availableTomorrow ? "checked" : ""}> متاح غداً</label>
         <label class="field field--check"><input type="checkbox" name="hasOnline" ${doc.hasOnline ? "checked" : ""}> كشف أونلاين</label>
+        <label class="field field--full">
+          <span>صور الطبيب</span>
+          <div class="doc-images" id="docImagesWrap">
+            ${renderDoctorImages(doc.images || [])}
+          </div>
+          <div class="doc-images__upload">
+            <input type="file" id="docImageInput" accept="image/*" multiple hidden>
+            <button type="button" class="btn btn--ghost btn--sm" id="docImageAddBtn">+ رفع صورة/صور</button>
+            <small id="docImageStatus"></small>
+          </div>
+        </label>
         <label class="field field--full"><span>نبذة عن الطبيب</span><textarea class="input textarea" name="bio" rows="4">${escapeHtml(doc.bio || "")}</textarea></label>
       </div>`;
+  }
+
+  function renderDoctorImages(images) {
+    if (!images.length) {
+      return `<p class="doc-images__empty">لا توجد صور مرفوعة بعد</p>`;
+    }
+    return `<div class="doc-images__grid">
+      ${images
+        .map(
+          (src, i) => `
+        <div class="doc-images__item">
+          <img src="${escapeHtml(src)}" alt="صورة الطبيب">
+          <button type="button" class="doc-images__del" data-img-del="${i}" title="حذف الصورة">✕</button>
+        </div>`
+        )
+        .join("")}
+    </div>`;
   }
 
   function renderDoctorModal() {
     const doc = state.editingDoctor;
     if (doc === null) return "";
-    const isNew = !doc.id;
+    const isNew = !!doc.__isNew;
     return `
       <div class="modal is-open" id="doctorModal">
         <div class="modal__backdrop" data-close-modal></div>
@@ -590,22 +615,19 @@ const App = (() => {
   function renderSettings() {
     const s = GitHubAPI.getSession();
     return `
-      <div class="page-head"><div><h1>GitHub والإعدادات</h1><p>إدارة الاتصال بالمستودع</p></div></div>
+      <div class="page-head"><div><h1>الإعدادات</h1><p>معلومات الحساب والاتصال</p></div></div>
       <div class="panel-stack">
         <div class="panel">
-          <h3>الاتصال الحالي</h3>
+          <h3>الحساب الحالي</h3>
           <dl class="info-dl">
-            <dt>المستخدم</dt><dd>${escapeHtml(s?.username)}</dd>
-            <dt>المستودع</dt><dd>${escapeHtml(s?.owner)}/${escapeHtml(s?.repo)}</dd>
-            <dt>الفرع</dt><dd>${escapeHtml(s?.branch)}</dd>
-            <dt>ملفات JSON</dt><dd>${Object.values(GitHubAPI.DATA_FILES).join("<br>")}</dd>
+            <dt>اسم المستخدم</dt><dd>${escapeHtml(s?.displayName || "—")}</dd>
           </dl>
         </div>
         <div class="panel">
           <h3>إجراءات</h3>
           <div class="quick-actions">
-            <button class="btn btn--primary" id="initRepoBtn">إعادة تهيئة JSON من الافتراضي</button>
-            <button class="btn btn--ghost" id="reloadDataBtn">إعادة تحميل من GitHub</button>
+            <button class="btn btn--primary" id="initRepoBtn">إعادة تهيئة البيانات الافتراضية</button>
+            <button class="btn btn--ghost" id="reloadDataBtn">إعادة تحميل البيانات</button>
             <button class="btn btn--danger" id="logoutBtn">تسجيل الخروج</button>
           </div>
         </div>
@@ -625,13 +647,13 @@ const App = (() => {
     // Dashboard & settings
     $("#reloadDataBtn")?.addEventListener("click", bootstrapData);
     $("#initRepoBtn")?.addEventListener("click", () => {
-      if (confirm("سيتم استبدال ملفات JSON على GitHub بالبيانات الافتراضية. متابعة؟")) initializeRepoData();
+      if (confirm("سيتم استبدال البيانات الحالية بالبيانات الافتراضية. متابعة؟")) initializeRepoData();
     });
     $("#logoutBtn")?.addEventListener("click", logout);
 
     // Doctors
     $("#addDoctorBtn")?.addEventListener("click", () => {
-      state.editingDoctor = {};
+      state.editingDoctor = { id: nextDoctorId(), images: [], __isNew: true };
       renderSection();
     });
     $("#doctorSearch")?.addEventListener("input", (e) => {
@@ -661,6 +683,7 @@ const App = (() => {
       $("#docAreaSelect").innerHTML = areas.map((a) => `<option>${escapeHtml(a)}</option>`).join("");
     });
     bindModalClose();
+    bindDoctorImageEvents();
 
     // Specialties
     $("#addSpecBtn")?.addEventListener("click", () => {
@@ -859,6 +882,54 @@ const App = (() => {
     });
   }
 
+  function bindDoctorImageEvents() {
+    const addBtn = $("#docImageAddBtn");
+    const fileInput = $("#docImageInput");
+    const status = $("#docImageStatus");
+    if (!addBtn || !fileInput) return;
+
+    if (!state.editingDoctor.images) state.editingDoctor.images = [];
+
+    addBtn.addEventListener("click", () => fileInput.click());
+
+    fileInput.addEventListener("change", async () => {
+      const files = Array.from(fileInput.files || []);
+      if (!files.length) return;
+
+      const doctorId = state.editingDoctor.id || "new";
+      addBtn.disabled = true;
+      let done = 0;
+      for (const file of files) {
+        status.textContent = `جاري رفع الصورة ${++done} من ${files.length}...`;
+        try {
+          const url = await GitHubAPI.uploadDoctorImage(doctorId, file);
+          state.editingDoctor.images.push(url);
+        } catch (err) {
+          toast(`فشل رفع صورة: ${err.message}`, "error");
+        }
+      }
+      status.textContent = "";
+      addBtn.disabled = false;
+      fileInput.value = "";
+      $("#docImagesWrap").innerHTML = renderDoctorImages(state.editingDoctor.images);
+      bindDoctorImageDeleteEvents();
+      toast("تم رفع الصور بنجاح", "success");
+    });
+
+    bindDoctorImageDeleteEvents();
+  }
+
+  function bindDoctorImageDeleteEvents() {
+    document.querySelectorAll("[data-img-del]").forEach((btn) => {
+      btn.addEventListener("click", () => {
+        const i = Number(btn.dataset.imgDel);
+        state.editingDoctor.images.splice(i, 1);
+        $("#docImagesWrap").innerHTML = renderDoctorImages(state.editingDoctor.images);
+        bindDoctorImageDeleteEvents();
+      });
+    });
+  }
+
   function saveDoctorForm() {
     const form = $("#doctorForm");
     const fd = new FormData(form);
@@ -887,6 +958,7 @@ const App = (() => {
       availableTomorrow: !!fd.get("availableTomorrow"),
       hasOnline: !!fd.get("hasOnline"),
       bio: fd.get("bio"),
+      images: state.editingDoctor.images || [],
     };
 
     const idx = state.data.doctors.findIndex((d) => d.id === doc.id);
@@ -896,7 +968,7 @@ const App = (() => {
     state.editingDoctor = null;
     setDirty();
     renderSection();
-    toast("تم حفظ الطبيب محلياً — اضغط «نشر على GitHub»", "info");
+    toast("تم حفظ الطبيب محلياً — اضغط «نشر التحديثات»", "info");
   }
 
   function saveSpecForm() {

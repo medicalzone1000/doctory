@@ -510,5 +510,31 @@
     "images": [
       "../assets/doctors/22/mqod3lrp3sse-1-FeaturedImg.jpg"
     ]
+  },
+  {
+    "id": 23,
+    "name": "اياد سباق",
+    "gender": "male",
+    "specialty": "أنف وأذن وحنجرة",
+    "specialtyIcon": "👂",
+    "degree": "استشاري",
+    "governorate": "سوهاج",
+    "area": "أخميم",
+    "clinic": "43 شارع خلف الجامعة.  موبايل 0123456789",
+    "experience": 5,
+    "price": 300,
+    "rating": 4.8,
+    "reviews": 0,
+    "initials": "",
+    "avatarColor": "#1b3a6b",
+    "featured": true,
+    "verified": true,
+    "availableToday": true,
+    "availableTomorrow": true,
+    "hasOnline": true,
+    "bio": "حيث حصل على أعلى معدل، خلال مراحل التقييم الثلاثة حتى الوصول إلى المرحلة النهائية والحصول على الجائزة، ليكون أول ممثل يحصل على أعلى تقييم خلال الدورات الأربعة كما أكدت إدارة الجائزة.",
+    "images": [
+      "../assets/doctors/23/mqoe20eihnpi-20250223144217320.jpg"
+    ]
   }
 ]

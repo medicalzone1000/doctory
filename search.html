@@ -1,0 +1,251 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>نتائج البحث | Doctory</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;600;700;800;900&family=Tajawal:wght@400;500;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="css/style.css">
+<link rel="stylesheet" href="css/search.css">
+</head>
+<body>
+
+<!-- ===== Navbar ===== -->
+<header class="navbar">
+  <div class="container navbar__inner">
+    <a href="index.html" class="brand">
+      <img src="assets/logo-placeholder.svg" alt="Doctory" class="brand__logo">
+      <span class="brand__name">Doctory</span>
+    </a>
+
+    <nav class="nav-links">
+      <a href="index.html" class="nav-links__item">الرئيسية</a>
+      <div class="nav-dropdown" id="specialtiesWrap">
+        <button class="nav-links__item nav-dropdown__trigger" id="specialtiesTrigger" aria-haspopup="true" aria-expanded="false">
+          التخصصات
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" class="nav-dropdown__chevron"><path d="m6 9 6 6 6-6" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+        </button>
+      </div>
+      <a href="top-rated.html" class="nav-links__item">الأعلى تقييمًا</a>
+      <a href="offers.html" class="nav-links__item">العروض</a>
+      <a href="join-doctor.html" class="nav-links__item">انضم كطبيب</a>
+    </nav>
+
+    <div class="navbar__actions">
+      <a href="login.html" class="btn btn--ghost">
+        <svg width="18" height="18" viewBox="0 0 24 24" fill="none"><path d="M12 12c2.7 0 4.9-2.2 4.9-4.9S14.7 2.2 12 2.2 7.1 4.4 7.1 7.1 9.3 12 12 12Zm0 2.5c-3.6 0-9 1.8-9 5.4V21h18v-1.1c0-3.6-5.4-5.4-9-5.4Z" fill="currentColor"/></svg>
+        تسجيل دخول
+      </a>
+      <a href="#" class="btn btn--primary btn--app-download">
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none"><path d="M12 16V4m0 0 4 4m-4-4-4 4M4 20h16" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+        حمل التطبيق
+      </a>
+    </div>
+
+    <button class="navbar__burger" id="burgerBtn" aria-label="فتح القائمة" aria-expanded="false">
+      <svg width="24" height="24" viewBox="0 0 24 24" fill="none" class="burger-icon-open"><path d="M4 7h16M4 12h16M4 17h16" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg>
+      <svg width="24" height="24" viewBox="0 0 24 24" fill="none" class="burger-icon-close"><path d="M6 6l12 12M18 6 6 18" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg>
+    </button>
+  </div>
+
+  <div class="mega-menu" id="specialtiesPanel">
+    <div class="container mega-menu__inner" id="specialtiesGrid"></div>
+  </div>
+
+  <nav class="mobile-menu" id="mobileMenu">
+    <a href="index.html" class="mobile-menu__item">الرئيسية</a>
+    <button class="mobile-menu__item mobile-menu__specialties-trigger" id="mobileSpecialtiesTrigger">
+      التخصصات
+      <svg width="14" height="14" viewBox="0 0 24 24" fill="none"><path d="m6 9 6 6 6-6" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+    </button>
+    <div class="mobile-menu__specialties" id="mobileSpecialtiesPanel"></div>
+    <a href="top-rated.html" class="mobile-menu__item">الأعلى تقييمًا</a>
+    <a href="offers.html" class="mobile-menu__item">العروض</a>
+    <a href="join-doctor.html" class="mobile-menu__item">انضم كطبيب</a>
+    <a href="login.html" class="mobile-menu__item mobile-menu__login">تسجيل دخول</a>
+  </nav>
+</header>
+
+<!-- ===== Search Bar (Compact) ===== -->
+<div class="search-strip">
+  <div class="container">
+    <form class="search-bar search-bar--compact" id="search" aria-label="بحث عن طبيب">
+      <div class="search-bar__field" data-field="governorate">
+        <label for="governorate">المحافظة</label>
+        <div class="search-bar__input" id="governorateInput">
+          <input type="text" id="governorate" placeholder="اختر المحافظة" readonly autocomplete="off">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none"><path d="m6 9 6 6 6-6" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+        </div>
+        <div class="search-dropdown" id="governorateDropdown"></div>
+      </div>
+
+      <div class="search-bar__field" data-field="area">
+        <label for="area" id="areaLabel">المنطقة</label>
+        <div class="search-bar__input" id="areaInput">
+          <input type="text" id="area" placeholder="اختر المحافظة أولاً" readonly autocomplete="off" disabled>
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none"><path d="m6 9 6 6 6-6" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+        </div>
+        <div class="search-dropdown" id="areaDropdown"></div>
+      </div>
+
+      <div class="search-bar__field" data-field="specialty">
+        <label for="specialty">التخصص</label>
+        <div class="search-bar__input" id="specialtyInput">
+          <input type="text" id="specialty" placeholder="اختر التخصص" readonly autocomplete="off">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none"><path d="m6 9 6 6 6-6" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+        </div>
+        <div class="search-dropdown" id="specialtyDropdown"></div>
+      </div>
+
+      <div class="search-bar__field">
+        <label for="doctor">اسم الطبيب</label>
+        <div class="search-bar__input">
+          <input type="text" id="doctor" placeholder="ابحث باسم الطبيب">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none"><circle cx="11" cy="11" r="7" stroke="currentColor" stroke-width="2"/><path d="m20 20-3.5-3.5" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg>
+        </div>
+      </div>
+
+      <button type="submit" class="search-bar__submit" aria-label="بحث">
+        <svg width="18" height="18" viewBox="0 0 24 24" fill="none"><circle cx="11" cy="11" r="7" stroke="currentColor" stroke-width="2"/><path d="m20 20-3.5-3.5" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg>
+        بحث
+      </button>
+    </form>
+  </div>
+</div>
+
+<!-- ===== Main Content ===== -->
+<main class="search-page">
+  <div class="container search-page__inner">
+
+    <!-- Sidebar Filters -->
+    <aside class="filters-sidebar" id="filtersSidebar">
+      <div class="filters-sidebar__header">
+        <h2 class="filters-sidebar__title">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none"><path d="M4 6h16M7 12h10M10 18h4" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg>
+          تصفية النتائج
+        </h2>
+        <button class="filters-sidebar__reset" id="resetFilters">مسح الكل</button>
+      </div>
+
+      <!-- Gender Filter -->
+      <div class="filter-group">
+        <h3 class="filter-group__title">الجنس</h3>
+        <div class="filter-chips" id="genderFilter">
+          <button class="filter-chip is-active" data-value="">الكل</button>
+          <button class="filter-chip" data-value="male">دكتور</button>
+          <button class="filter-chip" data-value="female">دكتورة</button>
+        </div>
+      </div>
+
+      <!-- Rating Filter -->
+      <div class="filter-group">
+        <h3 class="filter-group__title">التقييم</h3>
+        <div class="filter-chips" id="ratingFilter">
+          <button class="filter-chip is-active" data-value="0">الكل</button>
+          <button class="filter-chip" data-value="4.5">
+            <svg width="13" height="13" viewBox="0 0 24 24" fill="currentColor"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg>
+            4.5+
+          </button>
+          <button class="filter-chip" data-value="4">
+            <svg width="13" height="13" viewBox="0 0 24 24" fill="currentColor"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg>
+            4+
+          </button>
+          <button class="filter-chip" data-value="3">
+            <svg width="13" height="13" viewBox="0 0 24 24" fill="currentColor"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg>
+            3+
+          </button>
+        </div>
+      </div>
+
+      <!-- Price Range Filter -->
+      <div class="filter-group">
+        <h3 class="filter-group__title">سعر الكشف</h3>
+        <div class="filter-chips" id="priceFilter">
+          <button class="filter-chip is-active" data-value="0-99999">الكل</button>
+          <button class="filter-chip" data-value="0-200">حتى 200 جنيه</button>
+          <button class="filter-chip" data-value="200-400">200 – 400 جنيه</button>
+          <button class="filter-chip" data-value="400-700">400 – 700 جنيه</button>
+          <button class="filter-chip" data-value="700-99999">700+ جنيه</button>
+        </div>
+      </div>
+
+      <!-- Availability Filter -->
+      <div class="filter-group">
+        <h3 class="filter-group__title">الإتاحة</h3>
+        <div class="filter-chips" id="availabilityFilter">
+          <button class="filter-chip is-active" data-value="">الكل</button>
+          <button class="filter-chip" data-value="today">متاح اليوم</button>
+          <button class="filter-chip" data-value="tomorrow">متاح غدًا</button>
+          <button class="filter-chip" data-value="online">كشف أونلاين</button>
+        </div>
+      </div>
+
+      <!-- Experience Filter -->
+      <div class="filter-group">
+        <h3 class="filter-group__title">سنوات الخبرة</h3>
+        <div class="filter-chips" id="experienceFilter">
+          <button class="filter-chip is-active" data-value="0">الكل</button>
+          <button class="filter-chip" data-value="5">+5 سنوات</button>
+          <button class="filter-chip" data-value="10">+10 سنوات</button>
+          <button class="filter-chip" data-value="15">+15 سنة</button>
+        </div>
+      </div>
+    </aside>
+
+    <!-- Results Area -->
+    <div class="results-area">
+      <!-- Results Header -->
+      <div class="results-header">
+        <div class="results-header__info">
+          <h1 class="results-header__title" id="resultsTitle">نتائج البحث</h1>
+          <p class="results-header__count" id="resultsCount">جاري التحميل...</p>
+        </div>
+        <div class="results-header__controls">
+          <div class="sort-select-wrap">
+            <label for="sortSelect" class="sr-only">ترتيب حسب</label>
+            <select class="sort-select" id="sortSelect">
+              <option value="rating">الأعلى تقييمًا</option>
+              <option value="experience">الأكثر خبرة</option>
+              <option value="price-asc">السعر: الأقل أولاً</option>
+              <option value="price-desc">السعر: الأعلى أولاً</option>
+              <option value="reviews">الأكثر تقييمات</option>
+            </select>
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" class="sort-select__chevron"><path d="m6 9 6 6 6-6" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+          </div>
+          <button class="mobile-filter-btn" id="mobileFilterBtn" aria-label="فتح الفلاتر">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none"><path d="M4 6h16M7 12h10M10 18h4" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg>
+            فلترة
+            <span class="mobile-filter-btn__badge" id="activeFiltersCount" style="display:none">0</span>
+          </button>
+        </div>
+      </div>
+
+      <!-- Active filter tags -->
+      <div class="active-tags" id="activeTags"></div>
+
+      <!-- Doctor Cards Grid -->
+      <div class="doctors-grid" id="doctorsGrid"></div>
+
+      <!-- Empty State -->
+      <div class="empty-state" id="emptyState" style="display:none">
+        <div class="empty-state__icon">🔍</div>
+        <h3 class="empty-state__title">لا توجد نتائج</h3>
+        <p class="empty-state__text">جرب تعديل معايير البحث أو إزالة بعض الفلاتر</p>
+        <button class="btn btn--primary" id="clearAllFilters">مسح جميع الفلاتر</button>
+      </div>
+
+      <!-- Pagination -->
+      <div class="pagination" id="pagination"></div>
+    </div>
+  </div>
+</main>
+
+<!-- Mobile filters overlay -->
+<div class="filters-overlay" id="filtersOverlay"></div>
+
+<script src="js/data-loader.js"></script>
+<script src="js/site-runtime.js"></script>
+<script src="js/search.js"></script>
+</body>
+</html>

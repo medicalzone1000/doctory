@@ -1,0 +1,120 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>الملف الشخصي للطبيب | Doctory</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;600;700;800;900&family=Tajawal:wght@400;500;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="css/style.css">
+<link rel="stylesheet" href="css/doctor-profile.css">
+</head>
+<body>
+
+<!-- ===== Navbar ===== -->
+<header class="navbar">
+  <div class="container navbar__inner">
+    <a href="index.html" class="brand">
+      <img src="assets/logo-placeholder.svg" alt="Doctory" class="brand__logo">
+      <span class="brand__name">Doctory</span>
+    </a>
+
+    <nav class="nav-links">
+      <a href="index.html" class="nav-links__item">الرئيسية</a>
+      <div class="nav-dropdown" id="specialtiesWrap">
+        <button class="nav-links__item nav-dropdown__trigger" id="specialtiesTrigger" aria-haspopup="true" aria-expanded="false">
+          التخصصات
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" class="nav-dropdown__chevron"><path d="m6 9 6 6 6-6" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+        </button>
+      </div>
+      <a href="top-rated.html" class="nav-links__item">الأعلى تقييمًا</a>
+      <a href="offers.html" class="nav-links__item">العروض</a>
+      <a href="join-doctor.html" class="nav-links__item">انضم كطبيب</a>
+    </nav>
+
+    <div class="navbar__actions">
+      <a href="login.html" class="btn btn--ghost">
+        <svg width="18" height="18" viewBox="0 0 24 24" fill="none"><path d="M12 12c2.7 0 4.9-2.2 4.9-4.9S14.7 2.2 12 2.2 7.1 4.4 7.1 7.1 9.3 12 12 12Zm0 2.5c-3.6 0-9 1.8-9 5.4V21h18v-1.1c0-3.6-5.4-5.4-9-5.4Z" fill="currentColor"/></svg>
+        تسجيل دخول
+      </a>
+      <a href="#" class="btn btn--primary btn--app-download">
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none"><path d="M12 16V4m0 0 4 4m-4-4-4 4M4 20h16" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+        حمل التطبيق
+      </a>
+    </div>
+
+    <button class="navbar__burger" id="burgerBtn" aria-label="فتح القائمة" aria-expanded="false">
+      <svg width="24" height="24" viewBox="0 0 24 24" fill="none" class="burger-icon-open"><path d="M4 7h16M4 12h16M4 17h16" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg>
+      <svg width="24" height="24" viewBox="0 0 24 24" fill="none" class="burger-icon-close"><path d="M6 6l12 12M18 6 6 18" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg>
+    </button>
+  </div>
+
+  <div class="mega-menu" id="specialtiesPanel">
+    <div class="container mega-menu__inner" id="specialtiesGrid"></div>
+  </div>
+
+  <nav class="mobile-menu" id="mobileMenu">
+    <a href="index.html" class="mobile-menu__item">الرئيسية</a>
+    <button class="mobile-menu__item mobile-menu__specialties-trigger" id="mobileSpecialtiesTrigger">
+      التخصصات
+      <svg width="14" height="14" viewBox="0 0 24 24" fill="none"><path d="m6 9 6 6 6-6" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+    </button>
+    <div class="mobile-menu__specialties" id="mobileSpecialtiesPanel"></div>
+    <a href="top-rated.html" class="mobile-menu__item">الأعلى تقييمًا</a>
+    <a href="offers.html" class="mobile-menu__item">العروض</a>
+    <a href="join-doctor.html" class="mobile-menu__item">انضم كطبيب</a>
+    <a href="login.html" class="mobile-menu__item mobile-menu__login">تسجيل دخول</a>
+  </nav>
+</header>
+
+<!-- ===== Main Content ===== -->
+<main class="profile-page">
+  <div class="container profile-page__inner">
+
+    <!-- Breadcrumb (اختياري) -->
+    <div class="breadcrumb">
+      <a href="index.html">الرئيسية</a>
+      <span class="breadcrumb__sep">›</span>
+      <a href="search.html">نتائج البحث</a>
+      <span class="breadcrumb__sep">›</span>
+      <span class="breadcrumb__current" id="breadcrumbName">الطبيب</span>
+    </div>
+
+    <!-- ===== Doctor Profile ===== -->
+    <div class="profile-card" id="profileCard">
+      <!-- سيتم تعبئتها بواسطة JavaScript -->
+    </div>
+
+    <!-- ===== Related Doctors ===== -->
+    <section class="related-doctors">
+      <h2 class="related-doctors__title">أطباء مقترحون</h2>
+      <div class="related-doctors__grid" id="relatedDoctorsGrid"></div>
+    </section>
+
+  </div>
+</main>
+
+<!-- ===== Footer ===== -->
+<footer class="footer">
+  <div class="container footer__inner">
+    <div class="footer__brand">
+      <span class="brand__name">Doctory</span>
+      <p class="footer__tagline">دليلك الطبي الموثوق</p>
+    </div>
+    <div class="footer__links">
+      <a href="about.html">عن الموقع</a>
+      <a href="contact.html">اتصل بنا</a>
+      <a href="privacy.html">سياسة الخصوصية</a>
+    </div>
+    <div class="footer__copy">
+      &copy; 2026 Doctory. جميع الحقوق محفوظة.
+    </div>
+  </div>
+</footer>
+
+<!-- ===== Scripts ===== -->
+<script src="js/data-loader.js"></script>
+<script src="js/site-runtime.js"></script>
+<script src="js/doctor-profile.js"></script>
+</body>
+</html>

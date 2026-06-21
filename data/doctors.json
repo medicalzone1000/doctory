@@ -458,5 +458,28 @@
     "hasOnline": true,
     "avatarColor": "#0F766E",
     "bio": "د. إيمان رضا عمارة هي استشاري العلاج الطبيعي والتأهيل الحركي، متخصصة في إعادة التأهيل بعد العمليات الجراحية والإصابات الرياضية، وتقديم برامج علاجية للشلل والجلطات الدماغية."
+  },
+  {
+    "id": 21,
+    "name": "علوش aya",
+    "gender": "female",
+    "specialty": "أسنان",
+    "specialtyIcon": "🦷",
+    "degree": "استشاري",
+    "governorate": "السويس",
+    "area": "الأربعين",
+    "clinic": "23 شارع عبده",
+    "experience": 5,
+    "price": 100,
+    "rating": 4.6,
+    "reviews": 5,
+    "initials": "ع غ",
+    "avatarColor": "#d51024",
+    "featured": true,
+    "verified": true,
+    "availableToday": false,
+    "availableTomorrow": true,
+    "hasOnline": true,
+    "bio": "كويسة الحمد لله"
   }
 ]

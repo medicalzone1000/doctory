@@ -362,11 +362,12 @@
 }
 
 .doctor-card__avatar {
-  width: 72px;
-  height: 72px;
+  width: 96px;
+  height: 96px;
   border-radius: 18px;
   object-fit: cover;
   background: var(--lilac-100);
+  flex-shrink: 0;
 }
 
 .doctor-card__avatar-placeholder {

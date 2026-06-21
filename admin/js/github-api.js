@@ -7,6 +7,11 @@ const GitHubAPI = (() => {
   const STORAGE_KEY = "doctory_admin_session";
   const API = "https://api.github.com";
 
+  // Fixed repository owner/repo/branch — not exposed in the login UI.
+  const REPO_OWNER = "medicalzone1000";
+  const REPO_NAME = "doctory";
+  const REPO_BRANCH = "main";
+
   const DATA_FILES = {
     governorates: "data/governorates.json",
     specialties: "data/specialties.json",
@@ -75,24 +80,25 @@ const GitHubAPI = (() => {
     return text ? JSON.parse(text) : null;
   }
 
-  async function validateAndConnect({ token, owner, repo, branch }) {
+  async function validateAndConnect({ token, displayName }) {
     const trimmed = {
-      token: token.trim(),
-      owner: owner.trim(),
-      repo: repo.trim(),
-      branch: (branch || "main").trim(),
+      token: (token || "").trim(),
+      owner: REPO_OWNER,
+      repo: REPO_NAME,
+      branch: REPO_BRANCH,
+      displayName: (displayName || "").trim(),
     };
 
-    const user = await fetch(`${API}/user`, {
+    const userRes = await fetch(`${API}/user`, {
       headers: {
         Authorization: `Bearer ${trimmed.token}`,
         Accept: "application/vnd.github+json",
         "X-GitHub-Api-Version": "2022-11-28",
       },
-    }).then(async (r) => {
-      if (!r.ok) throw new Error("فشل التحقق من التوكن");
-      return r.json();
     });
+    if (!userRes.ok) {
+      throw new Error("بيانات الدخول غير صحيحة");
+    }
 
     const repoRes = await fetch(`${API}/repos/${trimmed.owner}/${trimmed.repo}`, {
       headers: {
@@ -102,11 +108,11 @@ const GitHubAPI = (() => {
       },
     });
     if (!repoRes.ok) {
-      throw new Error("المستودع غير موجود أو لا تملك صلاحية الوصول");
+      throw new Error("بيانات الدخول غير صحيحة");
     }
 
-    saveSession({ ...trimmed, username: user.login });
-    return { ...trimmed, username: user.login };
+    saveSession(trimmed);
+    return trimmed;
   }
 
   async function getFile(path) {
@@ -137,6 +143,65 @@ const GitHubAPI = (() => {
     });
 
     return data.content.sha;
+  }
+
+  async function putBinaryFile(path, base64Content, message, sha) {
+    const session = getSession();
+    const body = {
+      message,
+      content: base64Content,
+      branch: session.branch,
+    };
+    if (sha) body.sha = sha;
+
+    const data = await request(`/repos/${session.owner}/${session.repo}/contents/${path}`, {
+      method: "PUT",
+      body: JSON.stringify(body),
+    });
+
+    return data;
+  }
+
+  function fileToBase64(file) {
+    return new Promise((resolve, reject) => {
+      const reader = new FileReader();
+      reader.onload = () => {
+        const result = reader.result;
+        // result looks like "data:image/png;base64,AAAA..."
+        const base64 = result.split(",")[1];
+        resolve(base64);
+      };
+      reader.onerror = () => reject(new Error("فشل قراءة الملف"));
+      reader.readAsDataURL(file);
+    });
+  }
+
+  function sanitizeFileName(name) {
+    return name
+      .normalize("NFKD")
+      .replace(/[^\w.\-]+/g, "_")
+      .replace(/_+/g, "_");
+  }
+
+  async function uploadDoctorImage(doctorId, file) {
+    const base64 = await fileToBase64(file);
+    const ext = (file.name.split(".").pop() || "jpg").toLowerCase();
+    const safeBase = sanitizeFileName(file.name.replace(/\.[^.]+$/, ""));
+    const unique = Date.now().toString(36) + Math.random().toString(36).slice(2, 6);
+    const path = `assets/doctors/${doctorId}/${unique}-${safeBase}.${ext}`;
+
+    await putBinaryFile(path, base64, `Upload doctor image (${doctorId})`);
+    return `../${path}`;
+  }
+
+  async function deleteRepoFile(path, message) {
+    const session = getSession();
+    const existing = await getFile(path).catch(() => null);
+    if (!existing) return;
+    await request(`/repos/${session.owner}/${session.repo}/contents/${path}`, {
+      method: "DELETE",
+      body: JSON.stringify({ message, sha: existing.sha, branch: session.branch }),
+    });
   }
 
   async function loadAllData() {
@@ -178,6 +243,9 @@ const GitHubAPI = (() => {
     validateAndConnect,
     getFile,
     putFile,
+    putBinaryFile,
+    uploadDoctorImage,
+    deleteRepoFile,
     loadAllData,
     saveJsonFile,
     getPublicSiteUrl,

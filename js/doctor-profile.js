@@ -160,7 +160,6 @@ function renderProfile(doctor) {
         <div class="profile-card__rating">
           <div class="profile-card__stars">${stars}</div>
           <span class="profile-card__rating-value">${doctor.rating.toFixed(1)}</span>
-          <span class="profile-card__reviews">(${doctor.reviews} تقييم)</span>
         </div>
 
         <div class="profile-card__meta">
@@ -269,7 +268,7 @@ function renderRelatedDoctors(doctor) {
           <div class="related-doctor-card__name">${d.name}</div>
           <div class="related-doctor-card__specialty">${d.specialtyIcon} ${d.specialty}</div>
           <div class="related-doctor-card__rating">
-            ${buildStars(d.rating)} ${d.rating.toFixed(1)} (${d.reviews})
+            ${buildStars(d.rating)} ${d.rating.toFixed(1)}
           </div>
         </div>
       </div>

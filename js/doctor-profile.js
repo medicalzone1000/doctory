@@ -37,7 +37,6 @@ document.addEventListener("DOMContentLoaded", () => {
 
     renderProfile(doctor);
     renderRelatedDoctors(doctor);
-    renderReviews(doctor);
   };
 
   if (window.DOCTORY_DATA_READY) boot();
@@ -137,18 +136,18 @@ function renderProfile(doctor) {
   if (doctor.hasOnline) badges.push(`<span class="profile-card__badge profile-card__badge--online">● أونلاين</span>`);
 
   const hours = ["السبت – الأربعاء: 10 ص – 8 م", "الخميس: 10 ص – 2 م", "الجمعة: مغلق"];
-  const qualifications = [
-    "دكتوراه في الطب (جامعة القاهرة)",
-    "زمالة الكلية الملكية للأطباء (لندن)",
-    "إستشاري معتمد من الجمعية المصرية",
-    "عضو الجمعية العالمية لأمراض القلب"
-  ];
+  const qualifications = Array.isArray(doctor.qualifications) ? doctor.qualifications.filter(Boolean) : [];
+
+  const avatarImg = (doctor.images && doctor.images[0]) ? doctor.images[0].replace(/^(\.\.\/)+/, "") : null;
+  const avatarInner = avatarImg
+    ? `<img src="${avatarImg}" alt="${doctor.name}" class="profile-card__avatar-img">`
+    : doctor.initials;
 
   container.innerHTML = `
     <div class="profile-card__grid">
       <div class="profile-card__avatar-wrap">
         <div class="profile-card__avatar" style="background: linear-gradient(135deg, ${doctor.avatarColor}22, ${doctor.avatarColor}44); color:${doctor.avatarColor};">
-          ${doctor.initials}
+          ${avatarInner}
         </div>
         <div class="profile-card__badges">${badges.join("")}</div>
       </div>
@@ -187,9 +186,10 @@ function renderProfile(doctor) {
       <div class="profile-details__section">
         <h3>عن الطبيب</h3>
         <p>${doctor.bio || "هذا الطبيب يمتلك خبرة واسعة في تخصصه، ويقدم رعاية طبية عالية الجودة لمرضاه."}</p>
+        ${qualifications.length ? `
         <br>
         <h3>المؤهلات</h3>
-        <ul>${qualifications.map(q => `<li>${q}</li>`).join("")}</ul>
+        <ul>${qualifications.map(q => `<li>${q}</li>`).join("")}</ul>` : ""}
       </div>
       <div class="profile-details__section">
         <h3>العيادة</h3>
@@ -276,38 +276,4 @@ function renderRelatedDoctors(doctor) {
     `;
     grid.appendChild(card);
   });
-}
-
-/* ---------------------------------------------------------
-   Render Fake Reviews
---------------------------------------------------------- */
-function renderReviews(doctor) {
-  const profileCard = document.getElementById("profileCard");
-  const section = document.createElement("section");
-  section.className = "reviews-section";
-  section.innerHTML = `<h3 class="reviews-section__title">تقييمات المرضى</h3>`;
-
-  const reviewData = [
-    { name: "أحمد محمد", rating: 5, date: "2026-06-15", text: "دكتور ممتاز جداً، تعامل راقي وحل لمشكلتي الصحية بشكل دقيق." },
-    { name: "سارة علي", rating: 4, date: "2026-06-10", text: "الكشف كان جيداً، ولكن الانتظار كان طويلاً بعض الشيء." },
-    { name: "محمد يوسف", rating: 5, date: "2026-06-05", text: "أفضل طبيب في التخصص، شرح لي كل شيء بوضوح وأعطاني خطة علاج فعالة." },
-    { name: "فاطمة حسن", rating: 4.5, date: "2026-05-28", text: "الطبيبة مهتمة جداً وتتابع الحالة باستمرار، شكراً لها." }
-  ];
-
-  reviewData.forEach(r => {
-    const item = document.createElement("div");
-    item.className = "review-item";
-    const stars = buildStars(r.rating);
-    item.innerHTML = `
-      <div class="review-item__header">
-        <span class="review-item__name">${r.name}</span>
-        <span class="review-item__date">${r.date}</span>
-      </div>
-      <div class="review-item__rating">${stars}</div>
-      <p class="review-item__text">${r.text}</p>
-    `;
-    section.appendChild(item);
-  });
-
-  profileCard.after(section);
 }

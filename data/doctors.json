@@ -484,5 +484,31 @@
     "availableTomorrow": true,
     "hasOnline": true,
     "bio": "كويسة الحمد لله"
+  },
+  {
+    "id": 22,
+    "name": "عبير احمد غالب",
+    "gender": "female",
+    "specialty": "قلب وأوعية دموية",
+    "specialtyIcon": "❤️",
+    "degree": "استشاري",
+    "governorate": "الإسكندرية",
+    "area": "الرمل أول",
+    "clinic": "33 شارع سعد زغلول",
+    "experience": 15,
+    "price": 500,
+    "rating": 4.8,
+    "reviews": 0,
+    "initials": "",
+    "avatarColor": "#1b3a6b",
+    "featured": true,
+    "verified": true,
+    "availableToday": false,
+    "availableTomorrow": true,
+    "hasOnline": false,
+    "bio": "افضل اطباء الاسكندرية ",
+    "images": [
+      "../assets/doctors/22/mqod3lrp3sse-1-FeaturedImg.jpg"
+    ]
   }
 ]

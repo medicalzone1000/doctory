@@ -352,6 +352,11 @@ const App = (() => {
           </div>
         </label>
         <label class="field field--full"><span>نبذة عن الطبيب</span><textarea class="input textarea" name="bio" rows="4">${escapeHtml(doc.bio || "")}</textarea></label>
+        <label class="field field--full">
+          <span>المؤهلات (كل مؤهل في سطر مستقل)</span>
+          <textarea class="input textarea" name="qualifications" rows="4" placeholder="دكتوراه في الطب - جامعة القاهرة
+زمالة الكلية الملكية للأطباء - لندن">${escapeHtml((doc.qualifications || []).join("\n"))}</textarea>
+        </label>
       </div>`;
   }
 
@@ -361,13 +366,14 @@ const App = (() => {
     }
     return `<div class="doc-images__grid">
       ${images
-        .map(
-          (src, i) => `
+        .map((src, i) => {
+          const clean = String(src).replace(/^(\.\.\/)+/, "");
+          return `
         <div class="doc-images__item">
-          <img src="${escapeHtml(src)}" alt="صورة الطبيب">
+          <img src="../${escapeHtml(clean)}" alt="صورة الطبيب">
           <button type="button" class="doc-images__del" data-img-del="${i}" title="حذف الصورة">✕</button>
-        </div>`
-        )
+        </div>`;
+        })
         .join("")}
     </div>`;
   }
@@ -959,6 +965,10 @@ const App = (() => {
       hasOnline: !!fd.get("hasOnline"),
       bio: fd.get("bio"),
       images: state.editingDoctor.images || [],
+      qualifications: String(fd.get("qualifications") || "")
+        .split("\n")
+        .map((q) => q.trim())
+        .filter(Boolean),
     };
 
     const idx = state.data.doctors.findIndex((d) => d.id === doc.id);

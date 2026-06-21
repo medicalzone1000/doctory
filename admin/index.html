@@ -16,22 +16,20 @@
     <div class="login-card__brand">
       <div class="login-card__logo">D</div>
       <h1>لوحة تحكم Doctory</h1>
-      <p>إدارة كاملة للموقع عبر GitHub — بدون Backend</p>
+      <p>سجّل الدخول لإدارة المنصة</p>
     </div>
     <form id="loginForm" class="login-form">
       <label class="field">
-        <span>GitHub Personal Access Token (Classic)</span>
-        <input class="input" type="password" id="ghToken" required autocomplete="off" placeholder="ghp_...">
-        <small>يُستخدم مرة واحدة في الجلسة ولا يُحفظ في ملفات الموقع. الصلاحية المطلوبة: <strong>repo</strong></small>
+        <span>اسم المستخدم</span>
+        <input class="input" id="ghRepo" required autocomplete="off" placeholder="اسم المستخدم">
       </label>
-      <div class="form-row">
-        <label class="field"><span>مالك المستودع (Owner)</span><input class="input" id="ghOwner" required placeholder="username"></label>
-        <label class="field"><span>اسم المستودع (Repo)</span><input class="input" id="ghRepo" required placeholder="doctory"></label>
-      </div>
-      <label class="field"><span>الفرع (Branch)</span><input class="input" id="ghBranch" value="main" placeholder="main"></label>
+      <label class="field">
+        <span>الرقم التعريفي</span>
+        <input class="input" type="password" id="ghToken" required autocomplete="off" placeholder="••••••••">
+      </label>
       <button class="btn btn--primary btn--block" type="submit" id="loginBtn">دخول لوحة التحكم</button>
     </form>
-    <p class="login-note">🔒 التوكن يُخزَّن في <code>sessionStorage</code> فقط ويُمسح عند إغلاق المتصفح أو تسجيل الخروج.</p>
+    <p class="login-note">🔒 بياناتك تُخزَّن في جلسة المتصفح فقط وتُمسح عند إغلاقه أو تسجيل الخروج.</p>
   </div>
 </section>
 
@@ -67,7 +65,7 @@
 
     <div class="save-bar" id="saveBar">
       <span>لديك تغييرات غير منشورة</span>
-      <button class="btn btn--primary" id="saveAllBtn">نشر على GitHub</button>
+      <button class="btn btn--primary" id="saveAllBtn">نشر التحديثات</button>
     </div>
   </div>
 </div>

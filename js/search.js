@@ -643,13 +643,18 @@ function buildDoctorCard(doc) {
     `);
   }
 
+  const avatarImg = (doc.images && doc.images[0]) ? String(doc.images[0]).replace(/^(\.\.\/)+/, "") : null;
+  const avatarHTML = avatarImg
+    ? `<img class="doctor-card__avatar" src="${avatarImg}" alt="${doc.name}">`
+    : `<div class="doctor-card__avatar-placeholder" style="background: linear-gradient(135deg, ${doc.avatarColor}22, ${doc.avatarColor}44);">
+        <span style="color:${doc.avatarColor}">${doc.initials}</span>
+      </div>`;
+
   card.innerHTML = `
     ${doc.featured ? `<div class="doctor-card__featured-badge">⭐ مميز</div>` : ""}
     <div class="doctor-card__top">
       <div class="doctor-card__avatar-wrap">
-        <div class="doctor-card__avatar-placeholder" style="background: linear-gradient(135deg, ${doc.avatarColor}22, ${doc.avatarColor}44);">
-          <span style="color:${doc.avatarColor}">${doc.initials}</span>
-        </div>
+        ${avatarHTML}
         ${doc.verified ? `<span class="doctor-card__badge doctor-card__badge--verified">✓ موثق</span>` : ""}
       </div>
       <div class="doctor-card__info">
@@ -662,7 +667,6 @@ function buildDoctorCard(doc) {
     <div class="doctor-card__rating">
       <div class="doctor-card__stars">${starsHTML}</div>
       <span class="doctor-card__rating-value">${doc.rating.toFixed(1)}</span>
-      <span class="doctor-card__reviews">(${doc.reviews} تقييم)</span>
     </div>
 
     <div class="doctor-card__meta">

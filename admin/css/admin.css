@@ -308,3 +308,63 @@ code { background: #e2e8f0; padding: 2px 6px; border-radius: 6px; font-size: 12p
   .stats-grid { grid-template-columns: 1fr; }
   .link-row { grid-template-columns: 1fr; }
 }
+
+/* ===== Doctor Images Upload ===== */
+.doc-images {
+  border: 1px dashed var(--admin-border);
+  border-radius: var(--admin-radius);
+  padding: 12px;
+  margin-bottom: 10px;
+  background: #f8fafc;
+}
+.doc-images__empty {
+  color: var(--admin-muted);
+  font-size: 13px;
+  margin: 4px 0;
+  text-align: center;
+}
+.doc-images__grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(96px, 1fr));
+  gap: 10px;
+}
+.doc-images__item {
+  position: relative;
+  aspect-ratio: 1 / 1;
+  border-radius: 10px;
+  overflow: hidden;
+  border: 1px solid var(--admin-border);
+  background: #fff;
+}
+.doc-images__item img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+}
+.doc-images__del {
+  position: absolute;
+  top: 4px;
+  left: 4px;
+  width: 22px;
+  height: 22px;
+  border-radius: 50%;
+  border: none;
+  background: rgba(15, 23, 42, 0.7);
+  color: #fff;
+  font-size: 12px;
+  cursor: pointer;
+  display: grid;
+  place-items: center;
+  line-height: 1;
+}
+.doc-images__del:hover { background: var(--admin-danger); }
+.doc-images__upload {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+.doc-images__upload small {
+  color: var(--admin-muted);
+  font-size: 12px;
+}

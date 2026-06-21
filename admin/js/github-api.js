@@ -191,7 +191,7 @@ const GitHubAPI = (() => {
     const path = `assets/doctors/${doctorId}/${unique}-${safeBase}.${ext}`;
 
     await putBinaryFile(path, base64, `Upload doctor image (${doctorId})`);
-    return `../${path}`;
+    return path;
   }
 
   async function deleteRepoFile(path, message) {

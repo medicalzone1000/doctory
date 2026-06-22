@@ -28,28 +28,88 @@
     "titleLine2": "تصفح أكبر",
     "subtitle": "أفضل الأطباء والأخصائيين والاستشاريين المرخصين لتقديم الجلسات بسهولة وثقة، في مكان واحد."
   },
+  "homeSections": [
+    {
+      "id": "specialties",
+      "label": "تصفح حسب التخصص",
+      "eyebrow": "ابدأ من هنا",
+      "subtitle": "اختر تخصصك وابحث عن أفضل الأطباء في مكانك",
+      "visible": true,
+      "order": 1
+    },
+    {
+      "id": "how",
+      "label": "كيف تستخدم Doctory؟",
+      "eyebrow": "بسيط وسريع",
+      "subtitle": "",
+      "visible": true,
+      "order": 2
+    },
+    {
+      "id": "doctors",
+      "label": "أطباء مميزون",
+      "eyebrow": "الأكثر ثقة",
+      "subtitle": "من أعلى الأطباء تقييمًا على المنصة",
+      "visible": true,
+      "order": 3
+    },
+    {
+      "id": "testimonials",
+      "label": "آراء المرضى",
+      "eyebrow": "يقولون عنا",
+      "subtitle": "تجارب حقيقية من مرضى وثقوا بـ Doctory",
+      "visible": true,
+      "order": 4
+    },
+    {
+      "id": "blog",
+      "label": "أحدث المقالات الطبية",
+      "eyebrow": "اقرأ وتعلم",
+      "subtitle": "محتوى طبي موثوق يكتبه متخصصون لمساعدتك على اتخاذ قرارات صحية أفضل",
+      "visible": true,
+      "order": 5
+    },
+    {
+      "id": "app",
+      "label": "حمّل التطبيق",
+      "eyebrow": "تجربة أفضل",
+      "subtitle": "احجز مواعيدك، اتابع ملفك الصحي، وتواصل مع طبيبك في أي وقت من على موبايلك.",
+      "visible": true,
+      "order": 6
+    }
+  ],
+  "testimonials": [
+    {
+      "id": 1,
+      "text": "وجدت دكتور متخصص في أقل من دقيقتين! الموقع سهّل عليّ كتير وحجزت موعد بالعيادة من البيت.",
+      "name": "سارة م.",
+      "label": "مريضة — القاهرة",
+      "rating": 5,
+      "avatarColor": "#0EA5A4"
+    },
+    {
+      "id": 2,
+      "text": "أخيرًا موقع مصري يساعدني أقارن بين الأطباء وأعرف أسعار الكشف قبل ما أروح. ممتاز جدًا.",
+      "name": "أحمد ك.",
+      "label": "مريض — الإسكندرية",
+      "rating": 5,
+      "avatarColor": "#6366F1"
+    },
+    {
+      "id": 3,
+      "text": "بحثت عن دكتور عيون في المنطقة اللي أنا فيها ولقيت أكتر من 10 أطباء بتفاصيل كاملة. تجربة رائعة.",
+      "name": "مروة ع.",
+      "label": "مريضة — الجيزة",
+      "rating": 5,
+      "avatarColor": "#EC4899"
+    }
+  ],
   "navbar": {
     "links": [
-      {
-        "label": "الرئيسية",
-        "href": "index.html",
-        "visible": true
-      },
-      {
-        "label": "الأعلى تقييمًا",
-        "href": "top-rated.html",
-        "visible": true
-      },
-      {
-        "label": "العروض",
-        "href": "offers.html",
-        "visible": true
-      },
-      {
-        "label": "انضم كطبيب",
-        "href": "join-doctor.html",
-        "visible": true
-      }
+      { "label": "الرئيسية", "href": "index.html", "visible": true },
+      { "label": "الأعلى تقييمًا", "href": "top-rated.html", "visible": true },
+      { "label": "العروض", "href": "offers.html", "visible": true },
+      { "label": "انضم كطبيب", "href": "join-doctor.html", "visible": true }
     ],
     "loginLabel": "تسجيل دخول",
     "loginHref": "login.html",
@@ -60,51 +120,18 @@
     "tagline": "دليلك الطبي الموثوق",
     "copyright": "© 2026 Doctory. جميع الحقوق محفوظة.",
     "links": [
-      {
-        "label": "عن الموقع",
-        "href": "about.html"
-      },
-      {
-        "label": "اتصل بنا",
-        "href": "contact.html"
-      },
-      {
-        "label": "سياسة الخصوصية",
-        "href": "privacy.html"
-      }
+      { "label": "عن الموقع", "href": "about.html" },
+      { "label": "اتصل بنا", "href": "contact.html" },
+      { "label": "سياسة الخصوصية", "href": "privacy.html" }
     ]
   },
   "stubPages": {
-    "offers": {
-      "icon": "🎁",
-      "heading": "العروض قريباً",
-      "message": "نعمل على إطلاق قسم العروض والخصومات الطبية. تابعنا قريباً للاستفادة من أفضل الأسعار."
-    },
-    "join-doctor": {
-      "icon": "🩺",
-      "heading": "بوابة الأطباء قريباً",
-      "message": "سيتم إطلاق نموذج التسجيل للأطباء قريباً."
-    },
-    "login": {
-      "icon": "🔐",
-      "heading": "تسجيل الدخول قريباً",
-      "message": "نعمل على بناء نظام تسجيل الدخول للمرضى والأطباء."
-    },
-    "about": {
-      "icon": "ℹ️",
-      "heading": "عن Doctory",
-      "message": "Doctory منصة مصرية للبحث عن الأطباء وحجز المواعيد."
-    },
-    "contact": {
-      "icon": "✉️",
-      "heading": "اتصل بنا",
-      "message": "نموذج التواصل قيد التطوير. يمكنك مراسلتنا على support@doctory.example"
-    },
-    "privacy": {
-      "icon": "🛡️",
-      "heading": "سياسة الخصوصية",
-      "message": "سيتم نشر سياسة الخصوصية الكاملة قبل الإطلاق الرسمي."
-    }
+    "offers": { "icon": "🎁", "heading": "العروض قريباً", "message": "نعمل على إطلاق قسم العروض والخصومات الطبية." },
+    "join-doctor": { "icon": "🩺", "heading": "بوابة الأطباء قريباً", "message": "سيتم إطلاق نموذج التسجيل للأطباء قريباً." },
+    "login": { "icon": "🔐", "heading": "تسجيل الدخول قريباً", "message": "نعمل على بناء نظام تسجيل الدخول للمرضى والأطباء." },
+    "about": { "icon": "ℹ️", "heading": "عن Doctory", "message": "Doctory منصة مصرية للبحث عن الأطباء وحجز المواعيد." },
+    "contact": { "icon": "✉️", "heading": "اتصل بنا", "message": "نموذج التواصل قيد التطوير. يمكنك مراسلتنا على support@doctory.example" },
+    "privacy": { "icon": "🛡️", "heading": "سياسة الخصوصية", "message": "سيتم نشر سياسة الخصوصية الكاملة قبل الإطلاق الرسمي." }
   },
   "meta": {
     "siteTitle": "Doctory | منصة البحث عن طبيبك",

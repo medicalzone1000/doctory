@@ -20,6 +20,7 @@ const App = (() => {
     { id: "doctors", icon: "👨‍⚕️", label: "الأطباء" },
     { id: "specialties", icon: "🩺", label: "التخصصات" },
     { id: "governorates", icon: "📍", label: "المحافظات" },
+    { id: "home-sections", icon: "🏠", label: "أقسام الصفحة الرئيسية" },
     { id: "content", icon: "📝", label: "محتوى الموقع" },
     { id: "design", icon: "🎨", label: "التصميم والألوان" },
     { id: "settings", icon: "⚙️", label: "الإعدادات" },
@@ -197,6 +198,7 @@ const App = (() => {
       doctors: renderDoctors,
       specialties: renderSpecialties,
       governorates: renderGovernorates,
+      "home-sections": renderHomeSections,
       content: renderContent,
       design: renderDesign,
       settings: renderSettings,
@@ -496,6 +498,182 @@ const App = (() => {
   }
 
   /* ---------- Site Content ---------- */
+  /* ---------- Home Sections Manager ---------- */
+  function renderHomeSections() {
+    const cfg = state.data.siteConfig || {};
+    const sections = (cfg.homeSections || []).slice().sort((a,b)=>(a.order||99)-(b.order||99));
+    const sectionMeta = {
+      specialties: { icon: "🩺", hint: "شبكة التخصصات الطبية" },
+      how:         { icon: "📋", hint: "خطوات استخدام المنصة" },
+      doctors:     { icon: "👨‍⚕️", hint: "بطاقات الأطباء المميزين" },
+      testimonials:{ icon: "💬", hint: "آراء المرضى والتقييمات" },
+      blog:        { icon: "📰", hint: "أحدث المقالات الطبية" },
+      app:         { icon: "📱", hint: "قسم تحميل التطبيق" },
+    };
+
+    const rows = sections.map((sec, idx) => {
+      const meta = sectionMeta[sec.id] || { icon: "📄", hint: "" };
+      return `
+        <div class="section-row" data-sec-id="${escapeHtml(sec.id)}" style="background:white;border:1.5px solid #e5e7eb;border-radius:14px;padding:18px 20px;margin-bottom:10px;display:flex;align-items:center;gap:16px;cursor:grab;transition:box-shadow 0.2s;">
+          <span style="font-size:20px;flex-shrink:0;">${meta.icon}</span>
+          <div style="flex:1;min-width:0;">
+            <div style="display:flex;align-items:center;gap:10px;flex-wrap:wrap;">
+              <strong style="font-family:var(--font-display);font-size:15px;">${escapeHtml(sec.label)}</strong>
+              <span style="font-size:11px;background:#f3f4f6;color:#6b7280;padding:2px 8px;border-radius:99px;">${meta.hint}</span>
+            </div>
+            ${sec.eyebrow ? `<div style="font-size:12px;color:#0EA5A4;margin-top:3px;">الشارة: ${escapeHtml(sec.eyebrow)}</div>` : ''}
+          </div>
+          <div style="display:flex;align-items:center;gap:10px;flex-shrink:0;">
+            <label style="display:flex;align-items:center;gap:6px;cursor:pointer;font-size:13px;">
+              <input type="checkbox" class="sec-visible-toggle" data-idx="${idx}" ${sec.visible !== false ? 'checked' : ''} style="width:16px;height:16px;accent-color:#0EA5A4;">
+              ظاهر
+            </label>
+            <button class="btn btn--ghost btn--sm sec-edit-btn" data-idx="${idx}" style="padding:6px 12px;font-size:12px;">تعديل</button>
+            <div style="display:flex;flex-direction:column;gap:2px;">
+              <button class="sec-move-btn" data-idx="${idx}" data-dir="-1" title="أعلى" style="background:none;border:none;cursor:pointer;padding:2px;line-height:1;color:#9ca3af;" ${idx===0?'disabled':''}>▲</button>
+              <button class="sec-move-btn" data-idx="${idx}" data-dir="1" title="أسفل" style="background:none;border:none;cursor:pointer;padding:2px;line-height:1;color:#9ca3af;" ${idx===sections.length-1?'disabled':''}>▼</button>
+            </div>
+          </div>
+        </div>`;
+    }).join('');
+
+    // Testimonials editor
+    const testimonials = (cfg.testimonials || []);
+    const testimRows = testimonials.map((t, i) => `
+      <div style="background:#f9fafb;border:1px solid #e5e7eb;border-radius:10px;padding:14px 16px;margin-bottom:8px;display:flex;gap:12px;align-items:flex-start;">
+        <div style="flex:1;">
+          <div style="display:flex;gap:8px;margin-bottom:8px;">
+            <input class="input input--sm" style="flex:1;" placeholder="الاسم" data-testim-field="name" data-testim-idx="${i}" value="${escapeHtml(t.name||'')}">
+            <input class="input input--sm" style="width:160px;" placeholder="الوصف (مريض - القاهرة)" data-testim-field="label" data-testim-idx="${i}" value="${escapeHtml(t.label||'')}">
+            <input class="input input--sm" style="width:70px;" placeholder="لون" data-testim-field="avatarColor" data-testim-idx="${i}" value="${escapeHtml(t.avatarColor||'#0EA5A4')}">
+          </div>
+          <textarea class="input textarea" rows="2" style="width:100%;" placeholder="نص الشهادة..." data-testim-field="text" data-testim-idx="${i}">${escapeHtml(t.text||'')}</textarea>
+        </div>
+        <button class="btn-icon btn-icon--danger" data-del-testim="${i}" title="حذف" style="flex-shrink:0;">🗑️</button>
+      </div>`).join('');
+
+    return `
+      <div class="page-head"><div><h1>أقسام الصفحة الرئيسية</h1><p>تحكم في ترتيب وظهور أقسام الصفحة الرئيسية وتعديل نصوصها</p></div></div>
+      <div class="panel-stack">
+        <div class="panel">
+          <h3>الأقسام</h3>
+          <p style="font-size:13px;color:#6b7280;margin-bottom:16px;">استخدم الأسهم لتغيير الترتيب — الأقسام المعطّلة لن تظهر في الصفحة الرئيسية</p>
+          <div id="homeSectionsRows">${rows}</div>
+        </div>
+        <div class="panel" id="secEditPanel" style="display:none;">
+          <h3 id="secEditTitle">تعديل القسم</h3>
+          <div class="form-grid" id="secEditForm">
+            <label class="field"><span>عنوان القسم</span><input class="input" id="secEditLabel"></label>
+            <label class="field"><span>الشارة (eyebrow)</span><input class="input" id="secEditEyebrow"></label>
+            <label class="field field--full"><span>الوصف</span><textarea class="input textarea" id="secEditSubtitle" rows="2"></textarea></label>
+          </div>
+          <div style="display:flex;gap:10px;margin-top:12px;">
+            <button class="btn btn--primary" id="secEditSaveBtn">حفظ التعديلات</button>
+            <button class="btn btn--ghost" id="secEditCancelBtn">إلغاء</button>
+          </div>
+        </div>
+        <div class="panel">
+          <h3>شهادات المرضى</h3>
+          <p style="font-size:13px;color:#6b7280;margin-bottom:16px;">تظهر في قسم "آراء المرضى" إذا كان ظاهرًا</p>
+          <div id="testimonialsRows">${testimRows}</div>
+          <button class="btn btn--ghost btn--sm" id="addTestimBtn" style="margin-top:8px;">+ إضافة شهادة</button>
+        </div>
+      </div>`;
+  }
+
+  function bindHomeSectionsEvents() {
+    const cfg = state.data.siteConfig;
+    if (!cfg.homeSections) cfg.homeSections = [];
+    if (!cfg.testimonials) cfg.testimonials = [];
+
+    // Visibility toggles
+    document.querySelectorAll('.sec-visible-toggle').forEach(cb => {
+      cb.addEventListener('change', () => {
+        const idx = parseInt(cb.dataset.idx);
+        const sections = (cfg.homeSections||[]).slice().sort((a,b)=>(a.order||99)-(b.order||99));
+        sections[idx].visible = cb.checked;
+        setDirty();
+      });
+    });
+
+    // Move up/down
+    document.querySelectorAll('.sec-move-btn').forEach(btn => {
+      btn.addEventListener('click', () => {
+        const sections = (cfg.homeSections||[]).slice().sort((a,b)=>(a.order||99)-(b.order||99));
+        const idx = parseInt(btn.dataset.idx);
+        const dir = parseInt(btn.dataset.dir);
+        const swapIdx = idx + dir;
+        if (swapIdx < 0 || swapIdx >= sections.length) return;
+        const tmp = sections[idx].order;
+        sections[idx].order = sections[swapIdx].order;
+        sections[swapIdx].order = tmp;
+        cfg.homeSections = sections;
+        setDirty();
+        renderSection();
+      });
+    });
+
+    // Edit buttons
+    let editingSecIdx = null;
+    document.querySelectorAll('.sec-edit-btn').forEach(btn => {
+      btn.addEventListener('click', () => {
+        editingSecIdx = parseInt(btn.dataset.idx);
+        const sections = (cfg.homeSections||[]).slice().sort((a,b)=>(a.order||99)-(b.order||99));
+        const sec = sections[editingSecIdx];
+        document.getElementById('secEditPanel').style.display = '';
+        document.getElementById('secEditTitle').textContent = `تعديل: ${sec.label}`;
+        document.getElementById('secEditLabel').value = sec.label || '';
+        document.getElementById('secEditEyebrow').value = sec.eyebrow || '';
+        document.getElementById('secEditSubtitle').value = sec.subtitle || '';
+        document.getElementById('secEditPanel').scrollIntoView({ behavior: 'smooth', block: 'start' });
+      });
+    });
+
+    document.getElementById('secEditSaveBtn')?.addEventListener('click', () => {
+      if (editingSecIdx == null) return;
+      const sections = (cfg.homeSections||[]).slice().sort((a,b)=>(a.order||99)-(b.order||99));
+      sections[editingSecIdx].label = document.getElementById('secEditLabel').value;
+      sections[editingSecIdx].eyebrow = document.getElementById('secEditEyebrow').value;
+      sections[editingSecIdx].subtitle = document.getElementById('secEditSubtitle').value;
+      cfg.homeSections = sections;
+      setDirty();
+      toast('تم حفظ التعديلات — انشر للتطبيق', 'success');
+      renderSection();
+    });
+
+    document.getElementById('secEditCancelBtn')?.addEventListener('click', () => {
+      document.getElementById('secEditPanel').style.display = 'none';
+      editingSecIdx = null;
+    });
+
+    // Testimonials
+    document.querySelectorAll('[data-testim-field]').forEach(inp => {
+      inp.addEventListener('input', () => {
+        const idx = parseInt(inp.dataset.testimIdx);
+        const field = inp.dataset.testimField;
+        if (!cfg.testimonials[idx]) return;
+        cfg.testimonials[idx][field] = inp.value;
+        setDirty();
+      });
+    });
+
+    document.querySelectorAll('[data-del-testim]').forEach(btn => {
+      btn.addEventListener('click', () => {
+        const idx = parseInt(btn.dataset.delTestim);
+        cfg.testimonials.splice(idx, 1);
+        setDirty();
+        renderSection();
+        toast('تم الحذف — احفظ للنشر', 'info');
+      });
+    });
+
+    document.getElementById('addTestimBtn')?.addEventListener('click', () => {
+      cfg.testimonials.push({ id: Date.now(), name: '', label: '', text: '', rating: 5, avatarColor: '#0EA5A4' });
+      setDirty();
+      renderSection();
+    });
+  }
+
   function renderContent() {
     const c = state.data.siteConfig || {};
     const hero = c.hero || {};
@@ -649,6 +827,9 @@ const App = (() => {
         renderSection();
       });
     });
+
+    // Home sections
+    if (state.section === "home-sections") bindHomeSectionsEvents();
 
     // Dashboard & settings
     $("#reloadDataBtn")?.addEventListener("click", bootstrapData);

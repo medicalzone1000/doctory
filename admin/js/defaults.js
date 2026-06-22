@@ -19,7 +19,7 @@ function buildDefaultsFromLegacy() {
       branding: {
         name: "Doctory",
         logo: "assets/logo-placeholder.svg",
-        heroImage: "assets/doctor-hero.svg",
+        heroImage: "assets/doctor-hero.png",
         tagline: "دليلك الطبي الموثوق",
       },
       theme: {

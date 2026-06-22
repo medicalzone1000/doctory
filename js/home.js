@@ -5,7 +5,6 @@
 document.addEventListener("DOMContentLoaded", () => {
   const boot = () => {
     applyHeroFromConfig();
-    buildHeroMiniDoctors();
     populateHeroStats();
     buildDynamicSections();
     initScrollReveal();
@@ -22,33 +21,12 @@ function applyHeroFromConfig() {
   const hero = cfg.hero || {};
   const eyebrow = document.getElementById("heroEyebrow");
   const title = document.getElementById("heroTitle");
-  const accent = document.getElementById("heroAccent");
   const subtitle = document.getElementById("heroSubtitle");
   if (eyebrow && hero.eyebrow) eyebrow.textContent = hero.eyebrow;
-  if (accent && hero.titleAccent) accent.textContent = hero.titleAccent;
   if (title && hero.titleLine1) {
-    title.innerHTML = `${hero.titleLine1}<br>${hero.titleLine2 || ""} <span class="hero__title-accent">${hero.titleAccent || ""}</span>`;
+    title.innerHTML = `${hero.titleLine1}<br><span class="hero__title-accent">${hero.titleLine2 || ""}</span> <span>${hero.titleAccent || ""}</span>`;
   }
   if (subtitle && hero.subtitle) subtitle.textContent = hero.subtitle;
-}
-
-/* ---------------------------------------------------------
-   Hero mini doctor cards (from real data)
---------------------------------------------------------- */
-function buildHeroMiniDoctors() {
-  const el = document.getElementById("heroMiniDoctors");
-  if (!el || !window.DEMO_DOCTORS) return;
-  const top3 = [...DEMO_DOCTORS].sort((a,b)=>(b.rating||0)-(a.rating||0)).slice(0, 3);
-  el.innerHTML = top3.map(doc => `
-    <a href="doctor-profile.html?id=${doc.id}" class="hero__doctor-mini">
-      <div class="hero__doctor-mini-avatar" style="background:${doc.avatarColor||'#0EA5A4'}">${doc.initials||doc.name.slice(0,2)}</div>
-      <div class="hero__doctor-mini-info">
-        <div class="hero__doctor-mini-name">${doc.name}</div>
-        <div class="hero__doctor-mini-spec">${doc.specialtyIcon||''} ${doc.specialty}</div>
-      </div>
-      ${doc.availableToday ? '<span class="hero__doctor-mini-badge">متاح اليوم</span>' : ''}
-    </a>
-  `).join('');
 }
 
 /* ---------------------------------------------------------
@@ -72,9 +50,9 @@ function animateCount(el, target) {
   const tick = (now) => {
     const p = Math.min((now - start) / duration, 1);
     const ease = 1 - Math.pow(1 - p, 3);
-    el.textContent = Math.round(ease * target).toLocaleString("ar-EG");
+    el.textContent = Math.round(ease * target).toLocaleString("en-US");
     if (p < 1) requestAnimationFrame(tick);
-    else el.textContent = target.toLocaleString("ar-EG");
+    else el.textContent = target.toLocaleString("en-US");
   };
   requestAnimationFrame(tick);
 }
@@ -148,7 +126,7 @@ function buildSpecialtiesSection(sec) {
 function buildSpecialtiesHomeGrid() {
   const grid = document.getElementById("specialtiesHomeGrid");
   if (!grid || !window.MEDICAL_SPECIALTIES) return;
-  MEDICAL_SPECIALTIES.slice(0, 12).forEach((spec, i) => {
+  MEDICAL_SPECIALTIES.slice(0, 14).forEach((spec, i) => {
     const a = document.createElement("a");
     a.href = `search.html?specialty=${encodeURIComponent(spec.name)}`;
     a.className = "spec-card reveal";
@@ -193,7 +171,7 @@ function buildHowSection(sec) {
           <div class="how-step__icon">
             <svg viewBox="0 0 80 80" fill="none"><circle cx="40" cy="40" r="36" fill="var(--lilac-100)"/><path d="M28 40c0-6.6 5.4-12 12-12s12 5.4 12 12-5.4 12-12 12" stroke="var(--ink-700)" stroke-width="3" stroke-linecap="round"/><path d="M35 40l4 4 8-8" stroke="var(--accent-teal)" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/><path d="M28 52c-2 0-4-1-4-3v-2c0-1 1-2 2-2h4" stroke="var(--ink-700)" stroke-width="2.5" stroke-linecap="round"/></svg>
           </div>
-          <h3 class="how-step__title">احجز وانت مرتاح</h3>
+          <h3 class="how-step__title">تواصل مباشرة بالطبيب</h3>
           <p class="how-step__desc">احجز موعدك بضغطة واحدة واستلم تأكيد فوري على موبايلك</p>
         </div>
       </div>
@@ -215,13 +193,17 @@ function buildFeaturedDoctors() {
   const featured = [...DEMO_DOCTORS].sort((a,b)=>(b.rating||0)-(a.rating||0)).slice(0, 4);
   featured.forEach((doc, i) => {
     const stars = "★".repeat(Math.round(doc.rating || 5));
+    const avatarImg = (doc.images && doc.images[0]) ? String(doc.images[0]).replace(/^(\.\.\/)+/, "") : null;
+    const avatarHTML = avatarImg
+      ? `<img class="doctor-card__avatar doctor-card__avatar--photo" src="${avatarImg}" alt="${doc.name}">`
+      : `<div class="doctor-card__avatar" style="background:${doc.avatarColor||'#0EA5A4'}">${doc.initials||doc.name.slice(0,2)}</div>`;
     const card = document.createElement("a");
     card.href = `doctor-profile.html?id=${doc.id}`;
     card.className = "doctor-card reveal";
     card.style.transitionDelay = `${i * 60}ms`;
     card.innerHTML = `
       <div class="doctor-card__header">
-        <div class="doctor-card__avatar" style="background:${doc.avatarColor||'#0EA5A4'}">${doc.initials||doc.name.slice(0,2)}</div>
+        ${avatarHTML}
         <div class="doctor-card__info">
           <div class="doctor-card__name">${doc.name}</div>
           <div class="doctor-card__specialty">${doc.specialtyIcon||''} ${doc.specialty}</div>
@@ -288,8 +270,8 @@ function buildBlogSection(sec) {
       ${sectionHead(sec)}
       <div class="reports-grid" id="reportsGrid">
         <article class="report-card reveal">
-          <div class="report-card__cover report-card__cover--heart">
-            <svg viewBox="0 0 120 90" fill="none"><rect width="120" height="90" rx="12" fill="#EEF2FF"/><path d="M60 65s-24-16-24-32a16 16 0 0 1 24-13.9A16 16 0 0 1 84 33c0 16-24 32-24 32z" fill="#6366F1" opacity=".2"/><path d="M60 65s-24-16-24-32a16 16 0 0 1 24-13.9A16 16 0 0 1 84 33c0 16-24 32-24 32z" stroke="#6366F1" stroke-width="2.5" stroke-linejoin="round"/><path d="M44 38h8l4-8 8 16 4-8h8" stroke="#6366F1" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+          <div class="report-card__cover">
+            <img src="assets/articles/heart.svg" alt="القلب والأوعية الدموية" loading="lazy">
           </div>
           <div class="report-card__body">
             <span class="report-card__tag">القلب والأوعية</span>
@@ -299,8 +281,8 @@ function buildBlogSection(sec) {
           </div>
         </article>
         <article class="report-card reveal" style="transition-delay:80ms">
-          <div class="report-card__cover report-card__cover--brain">
-            <svg viewBox="0 0 120 90" fill="none"><rect width="120" height="90" rx="12" fill="#F0FDF4"/><ellipse cx="60" cy="42" rx="22" ry="18" stroke="#16A34A" stroke-width="2.5"/><circle cx="60" cy="42" r="6" fill="#16A34A" opacity=".3"/></svg>
+          <div class="report-card__cover">
+            <img src="assets/articles/brain.svg" alt="المخ والأعصاب" loading="lazy">
           </div>
           <div class="report-card__body">
             <span class="report-card__tag report-card__tag--green">المخ والأعصاب</span>
@@ -310,8 +292,8 @@ function buildBlogSection(sec) {
           </div>
         </article>
         <article class="report-card reveal" style="transition-delay:160ms">
-          <div class="report-card__cover report-card__cover--bone">
-            <svg viewBox="0 0 120 90" fill="none"><rect width="120" height="90" rx="12" fill="#FFF7ED"/><circle cx="60" cy="45" r="18" fill="#EA580C" opacity=".12" stroke="#EA580C" stroke-width="2"/></svg>
+          <div class="report-card__cover">
+            <img src="assets/articles/bone.svg" alt="العظام والمفاصل" loading="lazy">
           </div>
           <div class="report-card__body">
             <span class="report-card__tag report-card__tag--orange">العظام والمفاصل</span>
@@ -321,8 +303,8 @@ function buildBlogSection(sec) {
           </div>
         </article>
         <article class="report-card reveal" style="transition-delay:240ms">
-          <div class="report-card__cover report-card__cover--sugar">
-            <svg viewBox="0 0 120 90" fill="none"><rect width="120" height="90" rx="12" fill="#FFF1F2"/><rect x="35" y="28" width="50" height="34" rx="6" stroke="#E11D48" stroke-width="2.5"/><path d="M35 38h50" stroke="#E11D48" stroke-width="1.5"/><circle cx="53" cy="49" r="6" fill="#E11D48" opacity=".15" stroke="#E11D48" stroke-width="2"/><path d="M50 49l2 2 4-4" stroke="#E11D48" stroke-width="2" stroke-linecap="round"/></svg>
+          <div class="report-card__cover">
+            <img src="assets/articles/diabetes.svg" alt="السكر والغدد" loading="lazy">
           </div>
           <div class="report-card__body">
             <span class="report-card__tag report-card__tag--red">السكر والغدد</span>

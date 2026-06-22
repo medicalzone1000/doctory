@@ -67,11 +67,10 @@
 
     if (hero) {
       setText(".hero__eyebrow", hero.eyebrow);
-      setText(".hero__title-accent", hero.titleAccent);
       setText(".hero__subtitle", hero.subtitle);
       const titleEl = document.querySelector(".hero__title");
       if (titleEl && hero.titleLine1) {
-        titleEl.innerHTML = `${hero.titleLine1}<br>${hero.titleLine2 || ""} <span class="hero__title-accent">${hero.titleAccent || ""}</span>`;
+        titleEl.innerHTML = `${hero.titleLine1}<br><span class="hero__title-accent">${hero.titleLine2 || ""}</span> <span>${hero.titleAccent || ""}</span>`;
       }
       const heroImg = document.querySelector(".hero__doctor-img");
       if (heroImg && branding?.heroImage) {

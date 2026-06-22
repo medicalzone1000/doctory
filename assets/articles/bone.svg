@@ -1,0 +1,37 @@
+<svg viewBox="0 0 320 180" xmlns="http://www.w3.org/2000/svg">
+  <defs>
+    <linearGradient id="skyBone" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0%" stop-color="#fff7ed"/>
+      <stop offset="100%" stop-color="#ffedd5"/>
+    </linearGradient>
+    <linearGradient id="legBone" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0%" stop-color="#f3c9a4"/>
+      <stop offset="100%" stop-color="#dba479"/>
+    </linearGradient>
+    <radialGradient id="jointGlow" cx="50%" cy="50%" r="50%">
+      <stop offset="0%" stop-color="#ffffff" stop-opacity="0.65"/>
+      <stop offset="100%" stop-color="#ffffff" stop-opacity="0"/>
+    </radialGradient>
+  </defs>
+
+  <rect width="320" height="180" fill="url(#skyBone)"/>
+
+  <!-- leg silhouette diagonal across frame -->
+  <path d="M-10 40 Q40 30 70 55 Q95 75 100 105 Q104 130 90 150 Q140 165 200 158 Q230 154 250 138 L330 150 L330 190 L-10 190 Z" fill="url(#legBone)"/>
+
+  <!-- knee joint highlight -->
+  <ellipse cx="150" cy="118" rx="46" ry="34" fill="url(#jointGlow)"/>
+
+  <!-- bone structure overlay (X-ray style) lines -->
+  <path d="M40 60 Q90 78 110 110" fill="none" stroke="#ffffff" stroke-width="10" stroke-linecap="round" opacity="0.55"/>
+  <path d="M150 124 Q190 130 230 122" fill="none" stroke="#ffffff" stroke-width="10" stroke-linecap="round" opacity="0.55"/>
+  <circle cx="128" cy="116" r="16" fill="none" stroke="#EA580C" stroke-width="3" opacity="0.8"/>
+  <circle cx="128" cy="116" r="7" fill="#EA580C" opacity="0.5"/>
+
+  <!-- small joint marker dots suggesting cartilage wear -->
+  <circle cx="118" cy="104" r="2.6" fill="#EA580C" opacity="0.7"/>
+  <circle cx="138" cy="128" r="2.6" fill="#EA580C" opacity="0.7"/>
+  <circle cx="120" cy="128" r="2.2" fill="#EA580C" opacity="0.5"/>
+
+  <rect width="320" height="180" fill="#102A4C" opacity="0.04"/>
+</svg>

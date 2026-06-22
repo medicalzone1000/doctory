@@ -1,0 +1,49 @@
+<svg viewBox="0 0 320 180" xmlns="http://www.w3.org/2000/svg">
+  <defs>
+    <linearGradient id="skyHeart" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0%" stop-color="#eef2ff"/>
+      <stop offset="100%" stop-color="#e0e7ff"/>
+    </linearGradient>
+    <linearGradient id="coatHeart" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0%" stop-color="#ffffff"/>
+      <stop offset="100%" stop-color="#dde3f0"/>
+    </linearGradient>
+    <linearGradient id="skinHeart" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0%" stop-color="#f3c9a4"/>
+      <stop offset="100%" stop-color="#e0ac80"/>
+    </linearGradient>
+    <radialGradient id="glowHeart" cx="50%" cy="35%" r="65%">
+      <stop offset="0%" stop-color="#ffffff" stop-opacity="0.55"/>
+      <stop offset="100%" stop-color="#ffffff" stop-opacity="0"/>
+    </radialGradient>
+  </defs>
+
+  <rect width="320" height="180" fill="url(#skyHeart)"/>
+  <rect width="320" height="180" fill="url(#glowHeart)"/>
+
+  <!-- patient torso (background, blurred feel via soft tones) -->
+  <path d="M0 180 L0 95 Q70 55 160 60 Q250 65 320 100 L320 180 Z" fill="url(#skinHeart)" opacity="0.9"/>
+  <path d="M0 180 L0 95 Q70 55 160 60 Q250 65 320 100 L320 180 Z" fill="#ffffff" opacity="0.06"/>
+
+  <!-- white coat collar in lower right, doctor leaning in -->
+  <path d="M210 180 L235 110 Q270 100 300 118 L320 180 Z" fill="url(#coatHeart)"/>
+  <path d="M235 110 L245 130 L255 112 Z" fill="#1B3A6B" opacity="0.85"/>
+
+  <!-- stethoscope tubing -->
+  <path d="M252 116 C 244 130, 236 142, 214 150 C 196 156, 182 152, 176 138" fill="none" stroke="#1B3A6B" stroke-width="3.2" stroke-linecap="round" opacity="0.9"/>
+  <path d="M252 116 C 260 128, 266 138, 262 150" fill="none" stroke="#1B3A6B" stroke-width="3.2" stroke-linecap="round" opacity="0.9"/>
+  <circle cx="252" cy="114" r="5" fill="#0EA5A4"/>
+  <circle cx="262" cy="151" r="5" fill="#0EA5A4"/>
+
+  <!-- chest piece resting on chest -->
+  <circle cx="176" cy="136" r="11" fill="#1B3A6B"/>
+  <circle cx="176" cy="136" r="6.5" fill="#dfe6f5"/>
+
+  <!-- ECG heartbeat line across the chest -->
+  <path d="M40 128 H110 L120 100 L132 150 L142 118 L150 128 H230" fill="none" stroke="#E11D48" stroke-width="3" stroke-linecap="round" stroke-linejoin="round" opacity="0.85"/>
+
+  <!-- soft heart icon accent -->
+  <path d="M270 60c-6-8-18-8-22 1-4 9 4 17 22 30 18-13 26-21 22-30-4-9-16-9-22-1z" fill="#0EA5A4" opacity="0.18"/>
+
+  <rect width="320" height="180" fill="#102A4C" opacity="0.04"/>
+</svg>

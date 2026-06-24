@@ -827,6 +827,26 @@
   }
 }
 
+
+/* Search bar separator (matches homepage) */
+.search-bar__sep {
+  width: 1px;
+  background: rgba(16,42,76,0.08);
+  margin: 10px 0;
+  flex-shrink: 0;
+}
+
+/* Ensure dropdowns appear above sticky strip */
+.search-strip {
+  overflow: visible;
+}
+.search-strip .search-bar {
+  overflow: visible;
+}
+.search-strip .search-dropdown {
+  z-index: 9999;
+}
+
 @media (max-width: 640px) {
   .search-bar--compact {
     flex-direction: column;

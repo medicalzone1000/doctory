@@ -35,12 +35,66 @@ function applyHeroFromConfig() {
 function populateHeroStats() {
   const docCount = (window.DEMO_DOCTORS || []).length;
   const specCount = (window.MEDICAL_SPECIALTIES || []).length;
-  const govData = window.EGYPT_DATA || {};
+  const govData = window.EGYPT_GOVERNORATES || {};
   const govCount = Object.keys(govData).length || 27;
 
   animateCount(document.getElementById("statDoctors"), docCount || 0);
   animateCount(document.getElementById("statSpecs"), specCount || 0);
-  animateCount(document.getElementById("statGovs"), govCount);
+  animateCount(document.getElementById("statGovs"), govCount || 27);
+  buildHeroVisual();
+}
+
+/* ---------------------------------------------------------
+   Hero Visual — floating doctor cards from real data
+--------------------------------------------------------- */
+function buildHeroVisual() {
+  const wrap = document.getElementById("heroVisual");
+  if (!wrap || !window.DEMO_DOCTORS) return;
+
+  const colorFor = (d) => d.avatarColor || "#0EA5A4";
+
+  const topDocs = [...DEMO_DOCTORS]
+    .filter(d => d.availableToday)
+    .sort((a,b) => (b.rating||0) - (a.rating||0))
+    .slice(0, 3);
+
+  if (!topDocs.length) return;
+
+  const rows = topDocs.map(d => `
+    <div class="hv-doc-row">
+      <div class="hv-avatar" style="background:${colorFor(d)}">${d.initials || d.name.slice(0,2)}</div>
+      <div style="flex:1;min-width:0">
+        <div class="hv-name">${d.name}</div>
+        <div class="hv-spec">${d.specialtyIcon||""} ${d.specialty}</div>
+      </div>
+      <div class="hv-price">${d.price} ج</div>
+      <span class="hv-avail">متاح</span>
+    </div>`).join("");
+
+  const topRated = DEMO_DOCTORS.reduce((best, d) => (!best || d.rating > best.rating) ? d : best, null);
+
+  wrap.innerHTML = `
+    <div class="hv-card hv-card--main">
+      <div class="hv-card-title">متاحون اليوم</div>
+      ${rows}
+    </div>
+    <div class="hv-badge hv-badge--verified">
+      <div class="hv-badge__icon">✅</div>
+      <div class="hv-badge__text">
+        <strong>موثّق ومرخّص</strong>
+        <span>جميع الأطباء معتمدون</span>
+      </div>
+    </div>
+    ${topRated ? `
+    <div class="hv-card hv-card--mini">
+      <div class="hv-mini-avatar" style="background:${colorFor(topRated)}">${topRated.initials || topRated.name.slice(0,2)}</div>
+      <div style="flex:1;min-width:0">
+        <div class="hv-mini-name">${topRated.name}</div>
+        <div class="hv-mini-stars">★★★★★</div>
+      </div>
+      <div class="hv-mini-num">${topRated.rating}</div>
+    </div>` : ""}
+  `;
 }
 
 function animateCount(el, target) {

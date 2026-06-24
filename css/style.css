@@ -566,10 +566,11 @@ button { font-family: inherit; }
   flex-shrink: 0;
 }
 
-/* HERO VISUAL — floating UI cards */
+/* HERO VISUAL — doctor image */
 .hero__visual {
-  position: relative;
-  height: 380px;
+  display: flex;
+  justify-content: center;
+  align-items: flex-end;
   animation: fadeIn 0.9s 0.2s ease both;
 }
 
@@ -875,6 +876,15 @@ button { font-family: inherit; }
   border-color: rgba(14,165,164,0.4);
   color: #2dd4bf;
   transform: translateY(-2px);
+}
+
+.hero__doctor-img {
+  max-height: 380px;
+  max-width: 100%;
+  width: auto;
+  object-fit: contain;
+  filter: drop-shadow(0 24px 60px rgba(0,0,0,0.45));
+  animation: hvFloat 6s ease-in-out infinite;
 }
 
 /* Responsive hero */

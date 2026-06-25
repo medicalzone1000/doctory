@@ -72,23 +72,53 @@
     <div class="hero__inner">
 
       <!-- LEFT: Copy -->
-      <div class="hero__copy">
-        <div class="hero__badge" id="heroEyebrow">
-          <span class="hero__badge-dot"></span>
-          دليلك الطبي الموثوق في مصر
+      <!-- LEFT: Copy with Slider -->
+      <div class="hero__copy hero__slider">
+        <div class="hero__slides" id="heroSlides">
+
+          <!-- Slide 1 -->
+          <div class="hero__slide">
+            <div class="hero__badge">
+              <span class="hero__badge-dot"></span>
+              دليلك الطبي الموثوق في مصر
+            </div>
+            <h1 class="hero__title">
+              <span class="slide__eyebrow">EXAMINATION</span>
+              <span class="hero__title-line2">ابحث في<em class="hero__title-em"> أكبر دليل</em></span>
+              <span class="hero__title-line3">أطباء في مصر</span>
+            </h1>
+            <p class="hero__subtitle">أفضل الأطباء والأخصائيين المرخصين — قارن التقييمات، اطلع على الأسعار، واحجز موعدك بثقة.</p>
+          </div>
+
+          <!-- Slide 2 -->
+          <div class="hero__slide">
+            <div class="hero__badge">
+              <span class="hero__badge-dot"></span>
+              تجربة طبية كاملة من بيتك
+            </div>
+            <h1 class="hero__title">
+              <span class="slide__eyebrow">DIAGNOSIS</span>
+              <span class="hero__title-line2">قارن<em class="hero__title-em"> التقييمات</em></span>
+              <span class="hero__title-line3">واختار الأنسب لك</span>
+            </h1>
+            <p class="hero__subtitle">اطلع على تقييمات المرضى الحقيقية وأسعار الكشف لكل طبيب قبل الحجز مباشرة.</p>
+          </div>
+
+          <!-- Slide 3 -->
+          <div class="hero__slide">
+            <div class="hero__badge">
+              <span class="hero__badge-dot"></span>
+              ٢٧ محافظة في مصر
+            </div>
+            <h1 class="hero__title">
+              <span class="slide__eyebrow">BOOK YOUR VISIT</span>
+              <span class="hero__title-line2">احجز موعدك<em class="hero__title-em"> بسهولة</em></span>
+              <span class="hero__title-line3">في ثواني</span>
+            </h1>
+            <p class="hero__subtitle">ابحث حسب المحافظة والتخصص واسم الطبيب — واحجز موعدك فورًا بدون تعقيد.</p>
+          </div>
+
         </div>
-
-        <h1 class="hero__title" id="heroTitle">
-          <span class="hero__title-line1">عايز دكتور؟</span>
-          <span class="hero__title-line2">
-            ابحث في<em class="hero__title-em"> أكبر دليل</em>
-          </span>
-          <span class="hero__title-line3">أطباء في مصر</span>
-        </h1>
-
-        <p class="hero__subtitle" id="heroSubtitle">
-          أفضل الأطباء والأخصائيين المرخصين — قارن التقييمات، اطلع على الأسعار، واحجز موعدك بثقة.
-        </p>
 
         <div class="hero__stats" id="heroStats">
           <div class="hero__stat">
@@ -105,6 +135,21 @@
             <span class="hero__stat-num" id="statGovs">٢٧</span>
             <span class="hero__stat-label">محافظة</span>
           </div>
+        </div>
+
+        <div class="hero__slider-dots" id="sliderDots">
+          <button class="slider-dot is-active" data-idx="0" aria-label="شريحة 1"></button>
+          <button class="slider-dot" data-idx="1" aria-label="شريحة 2"></button>
+          <button class="slider-dot" data-idx="2" aria-label="شريحة 3"></button>
+        </div>
+
+        <div class="hero__slider-arrows">
+          <button class="slider-arrow" id="sliderPrev" aria-label="السابق">
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none"><path d="m15 18-6-6 6-6" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+          </button>
+          <button class="slider-arrow" id="sliderNext" aria-label="التالي">
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none"><path d="m9 18 6-6-6-6" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+          </button>
         </div>
       </div>
 
@@ -190,6 +235,54 @@
   </div><!-- /container -->
 </section>
 
+<!-- ===== Stats Section — doctory.me style ===== -->
+<section class="stats-section">
+  <div class="container">
+    <p class="stats-section__title">أرقام تتكلم عن نفسها</p>
+    <p class="stats-section__sub">منصة doctory تجمع أكبر قاعدة بيانات أطباء في مصر مع معلومات شاملة ودقيقة.</p>
+    <div class="stats-grid">
+      <div class="stat-block">
+        <span class="stat-block__num"><sup>+</sup><span id="statBig1">70</span>%</span>
+        <p class="stat-block__label">من زيارات الأطباء يمكن البحث عنها والمقارنة قبل الذهاب</p>
+      </div>
+      <div class="stat-block">
+        <span class="stat-block__num"><sup>+</sup><span id="statBig2">72</span>%</span>
+        <p class="stat-block__label">من المرضى يفضلون البحث عن طبيبهم أونلاين قبل الحجز</p>
+      </div>
+      <div class="stat-block">
+        <span class="stat-block__num"><sup>+</sup><span id="statBig3">54</span>%</span>
+        <p class="stat-block__label">توفير في الوقت عند البحث عن طبيب مناسب عبر المنصة</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ===== Value Prop Section — doctory.me style ===== -->
+<section class="value-section">
+  <div class="container">
+    <p class="value-section__kicker">WHY DOCTORY</p>
+    <h2 class="value-section__title">أنت تدور على الطبيب.<br><span>احنا بنسهل الرحلة.</span></h2>
+    <p class="value-section__sub">من البحث والمقارنة، لاطلاع على الأسعار والتقييمات، لحين الحجز — كل ده في مكان واحد.</p>
+    <div class="value-grid">
+      <div class="value-card">
+        <span class="value-card__icon">🔍</span>
+        <h3 class="value-card__title">بحث شامل</h3>
+        <p class="value-card__text">ابحث بالتخصص والمحافظة والمنطقة واسم الطبيب — فلترة دقيقة تساعدك توصل للدكتور الصح بسرعة.</p>
+      </div>
+      <div class="value-card">
+        <span class="value-card__icon">⭐</span>
+        <h3 class="value-card__title">تقييمات حقيقية</h3>
+        <p class="value-card__text">اطلع على تقييمات المرضى الفعليين وآرائهم قبل ما تقرر — شفافية كاملة بدون تزوير.</p>
+      </div>
+      <div class="value-card">
+        <span class="value-card__icon">💰</span>
+        <h3 class="value-card__title">أسعار واضحة</h3>
+        <p class="value-card__text">اعرف سعر الكشف قبل ما تروح — مفيش مفاجآت، كل الأسعار مكتوبة وواضحة على صفحة كل طبيب.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
 <!-- ===== Dynamic Sections ===== -->
 <div id="homeSectionsContainer"></div>
 
@@ -243,5 +336,36 @@
 <script src="js/site-runtime.js"></script>
 <script src="js/main.js"></script>
 <script src="js/home.js"></script>
+
+<!-- Hero Slider -->
+<script>
+(function() {
+  const slides = document.getElementById('heroSlides');
+  const dots   = document.querySelectorAll('.slider-dot');
+  const prev   = document.getElementById('sliderPrev');
+  const next   = document.getElementById('sliderNext');
+  if (!slides) return;
+
+  let current = 0;
+  const total = slides.children.length;
+
+  function goTo(idx) {
+    current = (idx + total) % total;
+    // RTL: slides go right-to-left so we invert direction
+    const dir = document.documentElement.dir === 'rtl' ? 1 : -1;
+    slides.style.transform = `translateX(${dir * current * 100}%)`;
+    dots.forEach((d, i) => d.classList.toggle('is-active', i === current));
+  }
+
+  dots.forEach(d => d.addEventListener('click', () => goTo(+d.dataset.idx)));
+  prev && prev.addEventListener('click', () => goTo(current - 1));
+  next && next.addEventListener('click', () => goTo(current + 1));
+
+  // Auto-play every 5s
+  let timer = setInterval(() => goTo(current + 1), 5000);
+  slides.parentElement.addEventListener('mouseenter', () => clearInterval(timer));
+  slides.parentElement.addEventListener('mouseleave', () => { timer = setInterval(() => goTo(current + 1), 5000); });
+})();
+</script>
 </body>
 </html>

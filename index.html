@@ -8,6 +8,407 @@
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;600;700;800;900&family=Tajawal:wght@400;500;700&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="css/style.css">
+<style>
+/* =========================================================
+   HERO V2 — "عايز دكتور؟" Centered Layout
+   ========================================================= */
+.hero-v2 {
+  position: relative;
+  background: #0b1829;
+  overflow: hidden;
+  padding-top: var(--nav-h);
+  min-height: 700px;
+}
+
+/* Background layers */
+.hero-v2__bg {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+}
+.hero-v2__bg-mesh {
+  position: absolute;
+  inset: 0;
+  background:
+    radial-gradient(ellipse 55% 60% at 15% 40%, rgba(14,165,164,0.18) 0%, transparent 65%),
+    radial-gradient(ellipse 45% 55% at 85% 40%, rgba(14,165,164,0.12) 0%, transparent 60%),
+    radial-gradient(ellipse 80% 50% at 50% 100%, rgba(27,58,107,0.5) 0%, transparent 70%);
+}
+.hero-v2__grid {
+  position: absolute;
+  inset: 0;
+  background-image:
+    linear-gradient(rgba(255,255,255,0.03) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(255,255,255,0.03) 1px, transparent 1px);
+  background-size: 55px 55px;
+  mask-image: radial-gradient(ellipse 100% 100% at 50% 0%, black 0%, transparent 85%);
+}
+.hero-v2__orb {
+  position: absolute;
+  border-radius: 50%;
+  filter: blur(90px);
+  animation: orbPulse 9s ease-in-out infinite;
+}
+.hero-v2__orb--1 { width: 420px; height: 320px; background: radial-gradient(circle, rgba(14,165,164,0.16), transparent 70%); top: -60px; left: 5%; animation-delay: 0s; }
+.hero-v2__orb--2 { width: 320px; height: 320px; background: radial-gradient(circle, rgba(99,102,241,0.12), transparent 70%); top: 80px; right: 5%; animation-delay: -4s; }
+@keyframes orbPulse {
+  0%,100% { opacity: 1; transform: scale(1); }
+  50% { opacity: 0.65; transform: scale(1.12) translateY(-12px); }
+}
+
+/* Main layout */
+.hero-v2__container {
+  position: relative;
+  z-index: 2;
+  max-width: 1280px;
+  margin: 0 auto;
+  padding: 0 32px;
+}
+
+/* Headline — big centered */
+.hero-v2__heading {
+  text-align: center;
+  padding-top: 64px;
+  padding-bottom: 48px;
+}
+.hero-v2__eyebrow {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  background: rgba(14,165,164,0.14);
+  border: 1px solid rgba(14,165,164,0.3);
+  color: #5eead4;
+  font-family: var(--font-display);
+  font-size: 13px;
+  font-weight: 700;
+  padding: 5px 16px 5px 10px;
+  border-radius: 999px;
+  margin-bottom: 24px;
+  animation: fadeUp 0.6s ease both;
+}
+.hero-v2__eyebrow-dot {
+  width: 7px; height: 7px; border-radius: 50%;
+  background: #2dd4bf;
+  animation: dotPulse2 2.2s ease-in-out infinite;
+}
+@keyframes dotPulse2 {
+  0%,100% { box-shadow: 0 0 0 0 rgba(45,212,191,0.45); }
+  50% { box-shadow: 0 0 0 6px rgba(45,212,191,0); }
+}
+.hero-v2__title {
+  font-family: var(--font-display);
+  font-weight: 900;
+  font-size: clamp(54px, 9vw, 110px);
+  color: white;
+  line-height: 1.0;
+  letter-spacing: -0.03em;
+  margin-bottom: 0;
+  animation: fadeUp 0.7s 0.1s ease both;
+}
+.hero-v2__title span {
+  display: inline-block;
+  background: linear-gradient(135deg, #2dd4bf 0%, #818cf8 55%, #c084fc 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+
+/* Two-column action cards */
+.hero-v2__cards {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 20px;
+  max-width: 900px;
+  margin: 0 auto 48px;
+  animation: fadeUp 0.7s 0.2s ease both;
+}
+
+.hero-action-card {
+  background: rgba(255,255,255,0.04);
+  border: 1.5px solid rgba(255,255,255,0.1);
+  border-radius: 24px;
+  padding: 32px 28px 28px;
+  text-align: center;
+  text-decoration: none;
+  color: white;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0;
+  transition: background 0.25s ease, border-color 0.25s ease, transform 0.25s cubic-bezier(0.22,1,0.36,1);
+  position: relative;
+  overflow: hidden;
+  cursor: pointer;
+}
+.hero-action-card::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  border-radius: inherit;
+  background: linear-gradient(160deg, rgba(14,165,164,0.1) 0%, rgba(99,102,241,0.06) 100%);
+  opacity: 0;
+  transition: opacity 0.25s;
+}
+.hero-action-card:hover {
+  border-color: rgba(14,165,164,0.5);
+  background: rgba(14,165,164,0.08);
+  transform: translateY(-4px);
+}
+.hero-action-card:hover::before { opacity: 1; }
+
+.hero-action-card__label {
+  font-family: var(--font-display);
+  font-size: 22px;
+  font-weight: 900;
+  color: white;
+  margin-bottom: 20px;
+  letter-spacing: -0.01em;
+}
+
+.hero-action-card__visual {
+  width: 100%;
+  max-width: 220px;
+  height: 180px;
+  display: flex;
+  align-items: flex-end;
+  justify-content: center;
+  margin-top: auto;
+}
+
+/* Robot SVG figure */
+.robot-figure {
+  animation: botFloat 4s ease-in-out infinite;
+}
+@keyframes botFloat {
+  0%,100% { transform: translateY(0); }
+  50% { transform: translateY(-10px); }
+}
+
+/* Search figure */
+.search-figure {
+  animation: searchFloat 4.5s ease-in-out infinite;
+  animation-delay: -2s;
+}
+@keyframes searchFloat {
+  0%,100% { transform: translateY(0); }
+  50% { transform: translateY(-8px); }
+}
+
+/* Sub-label / chat bar inside card */
+.hero-action-card__chat {
+  width: 100%;
+  background: rgba(255,255,255,0.06);
+  border: 1px solid rgba(255,255,255,0.12);
+  border-radius: 14px;
+  padding: 12px 16px;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  margin-top: 20px;
+  text-align: right;
+  transition: background 0.2s;
+}
+.hero-action-card:hover .hero-action-card__chat {
+  background: rgba(14,165,164,0.12);
+  border-color: rgba(14,165,164,0.3);
+}
+.hero-action-card__chat-icon {
+  width: 32px; height: 32px;
+  background: linear-gradient(135deg, #0ea5a4, #0891b2);
+  border-radius: 10px;
+  display: flex; align-items: center; justify-content: center;
+  flex-shrink: 0;
+  font-size: 16px;
+}
+.hero-action-card__chat-text {
+  font-size: 13px;
+  color: rgba(255,255,255,0.6);
+  font-family: var(--font-display);
+  flex: 1;
+}
+
+/* Search card inputs */
+.hero-action-card__search-preview {
+  width: 100%;
+  margin-top: 20px;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+.search-preview-row {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  background: rgba(255,255,255,0.06);
+  border: 1px solid rgba(255,255,255,0.1);
+  border-radius: 10px;
+  padding: 9px 12px;
+  font-size: 12px;
+  color: rgba(255,255,255,0.5);
+  font-family: var(--font-display);
+}
+.search-preview-row svg { flex-shrink: 0; opacity: 0.5; }
+
+/* Search bar below hero cards */
+.hero-v2__search-wrap {
+  position: relative;
+  z-index: 50;
+  max-width: 960px;
+  margin: 0 auto;
+  padding-bottom: 0;
+  margin-bottom: -36px;
+  animation: fadeUp 0.7s 0.35s ease both;
+}
+
+.hero-v2__quick {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  margin-top: 18px;
+  flex-wrap: wrap;
+  justify-content: center;
+  padding-bottom: 60px;
+}
+.hero-v2__quick-label {
+  font-size: 13px;
+  color: rgba(255,255,255,0.4);
+  font-family: var(--font-display);
+  font-weight: 600;
+  white-space: nowrap;
+}
+
+@keyframes fadeUp {
+  from { opacity: 0; transform: translateY(22px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+
+/* =========================================================
+   SECTIONS — Dark palette carried through
+   ========================================================= */
+
+/* Section base */
+.home-section-dark {
+  background: #0f1e35;
+  color: white;
+}
+.home-section-dark .section-head__eyebrow {
+  color: #5eead4;
+  background: rgba(14,165,164,0.12);
+}
+.home-section-dark .section-head__title { color: white; }
+.home-section-dark .section-head__sub { color: rgba(255,255,255,0.55); }
+
+/* Specialties section — deep navy */
+.specialties-section {
+  background: #0d1c30 !important;
+  padding-top: 96px !important;
+  border-top: 1px solid rgba(255,255,255,0.04);
+}
+.specialties-section .section-head__eyebrow {
+  color: #5eead4;
+  background: rgba(14,165,164,0.12);
+}
+.specialties-section .section-head__title { color: white; }
+.specialties-section .section-head__sub { color: rgba(255,255,255,0.55); }
+
+.spec-card {
+  background: rgba(255,255,255,0.04) !important;
+  border-color: rgba(255,255,255,0.08) !important;
+}
+.spec-card__name { color: rgba(255,255,255,0.85) !important; }
+.spec-card:hover {
+  background: rgba(14,165,164,0.1) !important;
+  border-color: rgba(14,165,164,0.35) !important;
+  box-shadow: 0 16px 40px rgba(14,165,164,0.18) !important;
+}
+.specialties-section .btn--ghost {
+  border-color: rgba(255,255,255,0.18);
+  color: rgba(255,255,255,0.8);
+}
+.specialties-section .btn--ghost:hover {
+  background: rgba(14,165,164,0.12);
+  color: #2dd4bf;
+  border-color: rgba(14,165,164,0.4);
+}
+
+/* How section */
+.how-section {
+  background: #0b1829 !important;
+}
+.how-section::before {
+  background: radial-gradient(ellipse 60% 80% at 80% 50%, rgba(14,165,164,0.08) 0%, transparent 70%) !important;
+}
+.how-section .section-head__eyebrow { color: #5eead4; background: rgba(14,165,164,0.12); }
+.how-section .section-head__title { color: white; }
+.how-section .section-head__sub { color: rgba(255,255,255,0.55); }
+
+.how-step {
+  background: rgba(255,255,255,0.04) !important;
+  border-color: rgba(255,255,255,0.08) !important;
+  box-shadow: 0 8px 32px rgba(0,0,0,0.3) !important;
+}
+.how-step:hover {
+  background: rgba(14,165,164,0.07) !important;
+  border-color: rgba(14,165,164,0.3) !important;
+  box-shadow: 0 28px 60px rgba(14,165,164,0.15) !important;
+}
+.how-step__title { color: white !important; }
+.how-step__desc { color: rgba(255,255,255,0.55) !important; }
+.how-step__icon circle[fill="var(--lilac-100)"] { fill: rgba(14,165,164,0.15); }
+
+/* Doctors section */
+.doctors-section {
+  background: #0d1c30 !important;
+  border-top: 1px solid rgba(255,255,255,0.04);
+}
+.doctors-section::before {
+  background: radial-gradient(ellipse 80% 60% at 20% 50%, rgba(14,165,164,0.07) 0%, transparent 60%) !important;
+}
+.doctors-section .section-head__eyebrow { color: #5eead4; background: rgba(14,165,164,0.12); }
+.doctors-section .section-head__title { color: white; }
+.doctors-section .section-head__sub { color: rgba(255,255,255,0.55); }
+
+.doctor-card {
+  background: rgba(255,255,255,0.04) !important;
+  border-color: rgba(255,255,255,0.08) !important;
+  color: white !important;
+}
+.doctor-card:hover {
+  box-shadow: 0 20px 50px rgba(14,165,164,0.15) !important;
+  border-color: rgba(14,165,164,0.35) !important;
+}
+.doctor-card__name { color: white !important; }
+.doctor-card__specialty { color: rgba(255,255,255,0.5) !important; }
+.doctor-card__rating { color: rgba(255,255,255,0.8) !important; }
+.doctor-card__divider { background: rgba(255,255,255,0.07) !important; }
+.doctor-card__badge { background: rgba(14,165,164,0.12) !important; color: #5eead4 !important; }
+.doctor-card__badge--teal { background: rgba(14,165,164,0.18) !important; }
+.doctor-card__price { color: white !important; }
+.doctor-card__price small { color: rgba(255,255,255,0.45) !important; }
+.doctor-card__cta { background: linear-gradient(135deg, #0ea5a4, #0891b2) !important; }
+.doctors-section .btn--ghost { border-color: rgba(255,255,255,0.18); color: rgba(255,255,255,0.8); }
+.doctors-section .btn--ghost:hover { background: rgba(14,165,164,0.12); color: #2dd4bf; border-color: rgba(14,165,164,0.4); }
+
+/* App CTA stays dark */
+.app-cta-section {
+  background: linear-gradient(135deg, #071628 0%, #0b1e3a 60%, #0a1d3a 100%) !important;
+  border-top: 1px solid rgba(255,255,255,0.04);
+}
+
+/* Footer stays dark */
+.site-footer { background: #060e1c !important; border-top: 1px solid rgba(255,255,255,0.06); }
+
+/* Responsive hero v2 */
+@media (max-width: 700px) {
+  .hero-v2__cards { grid-template-columns: 1fr; max-width: 420px; }
+  .hero-v2__title { font-size: clamp(48px, 15vw, 72px); }
+  .hero-action-card__visual { height: 140px; }
+}
+@media (max-width: 480px) {
+  .hero-v2__heading { padding-top: 40px; padding-bottom: 32px; }
+  .hero-v2__cards { gap: 14px; }
+}
+</style>
 </head>
 <body>
 
@@ -59,64 +460,161 @@
   </nav>
 </header>
 
-<!-- ===== Hero ===== -->
-<section class="hero">
-  <!-- Background layers -->
-  <div class="hero__mesh" aria-hidden="true"></div>
-  <div class="hero__glow hero__glow--1" aria-hidden="true"></div>
-  <div class="hero__glow hero__glow--2" aria-hidden="true"></div>
-  <div class="hero__glow hero__glow--3" aria-hidden="true"></div>
-  <div class="hero__grid-lines" aria-hidden="true"></div>
+<!-- ===== HERO V2 ===== -->
+<section class="hero-v2">
+  <!-- Background -->
+  <div class="hero-v2__bg" aria-hidden="true">
+    <div class="hero-v2__bg-mesh"></div>
+    <div class="hero-v2__grid"></div>
+    <div class="hero-v2__orb hero-v2__orb--1"></div>
+    <div class="hero-v2__orb hero-v2__orb--2"></div>
+  </div>
 
-  <div class="container">
-    <div class="hero__inner">
+  <div class="hero-v2__container">
 
-      <!-- LEFT: Copy -->
-      <div class="hero__copy">
-        <div class="hero__badge" id="heroEyebrow">
-          <span class="hero__badge-dot"></span>
-          دليلك الطبي الموثوق في مصر
+    <!-- Heading -->
+    <div class="hero-v2__heading">
+      <div class="hero-v2__eyebrow">
+        <span class="hero-v2__eyebrow-dot"></span>
+        دليلك الطبي الموثوق في مصر
+      </div>
+      <h1 class="hero-v2__title">عايز <span>دكتور؟</span></h1>
+    </div>
+
+    <!-- Two Action Cards -->
+    <div class="hero-v2__cards">
+
+      <!-- Card 1: دور بنفسك (Search) — RIGHT in RTL -->
+      <a href="search.html" class="hero-action-card">
+        <div class="hero-action-card__label">دور بنفسك</div>
+
+        <!-- Search man illustration -->
+        <div class="hero-action-card__visual">
+          <svg class="search-figure" viewBox="0 0 220 190" fill="none" xmlns="http://www.w3.org/2000/svg" style="width:100%;max-width:210px">
+            <!-- Big magnifier -->
+            <circle cx="110" cy="88" r="55" fill="none" stroke="rgba(14,165,164,0.35)" stroke-width="3"/>
+            <circle cx="110" cy="88" r="48" fill="rgba(14,165,164,0.12)" stroke="rgba(14,165,164,0.5)" stroke-width="2.5"/>
+            <!-- Lens glare -->
+            <ellipse cx="94" cy="72" rx="14" ry="10" fill="rgba(255,255,255,0.18)" transform="rotate(-15 94 72)"/>
+            <!-- Handle -->
+            <line x1="150" y1="128" x2="182" y2="162" stroke="#5eead4" stroke-width="14" stroke-linecap="round"/>
+            <!-- Person inside lens -->
+            <!-- Body -->
+            <rect x="95" y="82" width="30" height="36" rx="8" fill="#1B3A6B"/>
+            <!-- White shirt -->
+            <rect x="97" y="84" width="26" height="20" rx="5" fill="white" opacity="0.12"/>
+            <!-- Head -->
+            <circle cx="110" cy="74" r="12" fill="#e8c49a"/>
+            <!-- Hair -->
+            <path d="M98 71 C98 61 122 61 122 71 L122 68 C122 58 98 58 98 68Z" fill="#5a3a1a"/>
+            <!-- Face features -->
+            <circle cx="106" cy="73" r="1.5" fill="#333"/>
+            <circle cx="114" cy="73" r="1.5" fill="#333"/>
+            <path d="M106 78 Q110 81 114 78" stroke="#a06040" stroke-width="1.2" stroke-linecap="round" fill="none"/>
+            <!-- Tie -->
+            <path d="M109 84 L113 84 L111 100 Z" fill="#0ea5a4"/>
+            <!-- Arm holding magnifier - pointing right -->
+            <path d="M125 90 Q140 82 150 80" stroke="#e8c49a" stroke-width="8" stroke-linecap="round" fill="none"/>
+            <!-- Briefcase hint -->
+            <rect x="95" y="115" width="30" height="3" rx="1.5" fill="rgba(255,255,255,0.1)"/>
+          </svg>
         </div>
 
-        <h1 class="hero__title" id="heroTitle">
-          <span class="hero__title-line1">عايز دكتور؟</span>
-          <span class="hero__title-line2">
-            ابحث في<em class="hero__title-em"> أكبر دليل</em>
-          </span>
-          <span class="hero__title-line3">أطباء في مصر</span>
-        </h1>
-
-        <p class="hero__subtitle" id="heroSubtitle">
-          أفضل الأطباء والأخصائيين المرخصين — قارن التقييمات، اطلع على الأسعار، واحجز موعدك بثقة.
-        </p>
-
-        <div class="hero__stats" id="heroStats">
-          <div class="hero__stat">
-            <span class="hero__stat-num" id="statDoctors">—</span>
-            <span class="hero__stat-label">طبيب</span>
+        <!-- Search preview rows -->
+        <div class="hero-action-card__search-preview">
+          <div class="search-preview-row">
+            <svg width="13" height="13" viewBox="0 0 24 24" fill="none"><path d="M12 2C8.13 2 5 5.13 5 9c0 5.25 7 13 7 13s7-7.75 7-13c0-3.87-3.13-7-7-7z" fill="currentColor"/></svg>
+            المحافظة
           </div>
-          <div class="hero__stat-sep"></div>
-          <div class="hero__stat">
-            <span class="hero__stat-num" id="statSpecs">—</span>
-            <span class="hero__stat-label">تخصص</span>
-          </div>
-          <div class="hero__stat-sep"></div>
-          <div class="hero__stat">
-            <span class="hero__stat-num" id="statGovs">٢٧</span>
-            <span class="hero__stat-label">محافظة</span>
+          <div class="search-preview-row">
+            <svg width="13" height="13" viewBox="0 0 24 24" fill="none"><path d="M9 12l2 2 4-4m6 2a9 9 0 1 1-18 0 9 9 0 0 1 18 0z" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+            التخصص
           </div>
         </div>
-      </div>
+      </a>
 
-      <!-- RIGHT: Doctor image -->
-      <div class="hero__visual" aria-hidden="true">
-        <img src="assets/doctor-hero.png" alt="" class="hero__doctor-img">
-      </div>
+      <!-- Card 2: اسأل خبير (AI Chat) — LEFT in RTL -->
+      <a href="#" class="hero-action-card" id="aiChatBtn">
+        <div class="hero-action-card__label">اسأل خبير</div>
 
-    </div><!-- /hero__inner -->
+        <!-- Robot illustration -->
+        <div class="hero-action-card__visual">
+          <svg class="robot-figure" viewBox="0 0 200 190" fill="none" xmlns="http://www.w3.org/2000/svg" style="width:100%;max-width:190px">
+            <!-- Antenna -->
+            <line x1="100" y1="15" x2="100" y2="35" stroke="#5eead4" stroke-width="3" stroke-linecap="round"/>
+            <circle cx="100" cy="11" r="5" fill="#5eead4"/>
+            <!-- Head -->
+            <rect x="60" y="35" width="80" height="70" rx="20" fill="#1B3A6B" stroke="#0ea5a4" stroke-width="2"/>
+            <!-- Head glare -->
+            <ellipse cx="80" cy="50" rx="14" ry="8" fill="rgba(255,255,255,0.06)" transform="rotate(-10 80 50)"/>
+            <!-- Eyes — glowing blue -->
+            <rect x="73" y="54" width="22" height="16" rx="8" fill="#0ea5a4" opacity="0.9"/>
+            <rect x="73" y="54" width="22" height="16" rx="8" fill="url(#eyeGlow)"/>
+            <circle cx="84" cy="62" r="5" fill="white" opacity="0.95"/>
+            <circle cx="84" cy="62" r="3" fill="#0ea5a4"/>
+            <circle cx="86" cy="60" r="1.5" fill="white"/>
 
-    <!-- Search Bar — outside grid, full width below -->
-    <div class="hero__search-wrap">
+            <rect x="105" y="54" width="22" height="16" rx="8" fill="#0ea5a4" opacity="0.9"/>
+            <circle cx="116" cy="62" r="5" fill="white" opacity="0.95"/>
+            <circle cx="116" cy="62" r="3" fill="#0ea5a4"/>
+            <circle cx="118" cy="60" r="1.5" fill="white"/>
+
+            <!-- Mouth speaker grill -->
+            <rect x="78" y="81" width="44" height="14" rx="7" fill="rgba(14,165,164,0.2)" stroke="rgba(14,165,164,0.4)" stroke-width="1.5"/>
+            <line x1="84" y1="88" x2="116" y2="88" stroke="#5eead4" stroke-width="1.5" stroke-linecap="round" opacity="0.6"/>
+            <line x1="88" y1="84" x2="88" y2="92" stroke="#5eead4" stroke-width="1" stroke-linecap="round" opacity="0.4"/>
+            <line x1="96" y1="84" x2="96" y2="92" stroke="#5eead4" stroke-width="1" stroke-linecap="round" opacity="0.4"/>
+            <line x1="104" y1="84" x2="104" y2="92" stroke="#5eead4" stroke-width="1" stroke-linecap="round" opacity="0.4"/>
+            <line x1="112" y1="84" x2="112" y2="92" stroke="#5eead4" stroke-width="1" stroke-linecap="round" opacity="0.4"/>
+
+            <!-- Neck -->
+            <rect x="90" y="103" width="20" height="10" rx="4" fill="#0d2240"/>
+
+            <!-- Body -->
+            <rect x="52" y="112" width="96" height="60" rx="18" fill="#1B3A6B" stroke="#0ea5a4" stroke-width="1.5"/>
+            <!-- Chest panel -->
+            <rect x="68" y="122" width="64" height="40" rx="12" fill="rgba(14,165,164,0.12)" stroke="rgba(14,165,164,0.25)" stroke-width="1"/>
+            <!-- Chest lights -->
+            <circle cx="82" cy="134" r="5" fill="#0ea5a4" opacity="0.8"/>
+            <circle cx="82" cy="134" r="5" fill="#0ea5a4">
+              <animate attributeName="opacity" values="0.8;0.3;0.8" dur="2s" repeatCount="indefinite"/>
+            </circle>
+            <circle cx="100" cy="134" r="5" fill="#818cf8" opacity="0.7"/>
+            <circle cx="118" cy="134" r="5" fill="#0ea5a4" opacity="0.6"/>
+            <!-- Waveform on chest -->
+            <polyline points="72,148 78,142 84,154 90,140 96,152 102,144 108,152 114,140 120,148 126,148" stroke="#5eead4" stroke-width="1.5" fill="none" stroke-linecap="round" stroke-linejoin="round" opacity="0.55"/>
+
+            <!-- Arms -->
+            <rect x="22" y="114" width="30" height="14" rx="7" fill="#1B3A6B" stroke="rgba(14,165,164,0.3)" stroke-width="1.5"/>
+            <rect x="148" y="114" width="30" height="14" rx="7" fill="#1B3A6B" stroke="rgba(14,165,164,0.3)" stroke-width="1.5"/>
+            <!-- Hands -->
+            <circle cx="22" cy="121" r="7" fill="#0ea5a4" opacity="0.7"/>
+            <circle cx="178" cy="121" r="7" fill="#0ea5a4" opacity="0.7"/>
+
+            <!-- Feet -->
+            <rect x="70" y="170" width="28" height="14" rx="7" fill="#0d2240" stroke="rgba(14,165,164,0.3)" stroke-width="1.5"/>
+            <rect x="102" y="170" width="28" height="14" rx="7" fill="#0d2240" stroke="rgba(14,165,164,0.3)" stroke-width="1.5"/>
+
+            <!-- Eye glow filter -->
+            <defs>
+              <radialGradient id="eyeGlow" cx="50%" cy="50%" r="50%">
+                <stop offset="0%" stop-color="#5eead4" stop-opacity="0.4"/>
+                <stop offset="100%" stop-color="transparent"/>
+              </radialGradient>
+            </defs>
+          </svg>
+        </div>
+
+        <!-- Chat bar -->
+        <div class="hero-action-card__chat">
+          <div class="hero-action-card__chat-icon">💬</div>
+          <span class="hero-action-card__chat-text">أوصف حالتك.. أو اسأل عن دكتور</span>
+        </div>
+      </a>
+    </div>
+
+    <!-- Search Bar -->
+    <div class="hero-v2__search-wrap">
       <form class="search-bar" id="search" aria-label="بحث عن طبيب">
         <div class="search-bar__field" data-field="governorate">
           <label for="governorate">
@@ -177,8 +675,8 @@
       </form>
 
       <!-- Quick specialty pills -->
-      <div class="hero__quick" id="heroQuickPills">
-        <span class="hero__quick-label">الأكثر بحثاً:</span>
+      <div class="hero-v2__quick">
+        <span class="hero-v2__quick-label">الأكثر بحثاً:</span>
         <a href="search.html?specialty=%D9%82%D9%84%D8%A8+%D9%88%D8%A3%D9%88%D8%B9%D9%8A%D8%A9+%D8%AF%D9%85%D9%88%D9%8A%D8%A9" class="quick-pill">❤️ قلب</a>
         <a href="search.html?specialty=%D8%B9%D9%8A%D9%88%D9%86" class="quick-pill">👁️ عيون</a>
         <a href="search.html?specialty=%D8%A3%D8%B7%D9%81%D8%A7%D9%84+%D9%88%D8%AD%D8%AF%D9%8A%D8%AB%D9%8A+%D8%A7%D9%84%D9%88%D9%84%D8%A7%D8%AF%D8%A9" class="quick-pill">👶 أطفال</a>
@@ -186,8 +684,8 @@
         <a href="search.html?specialty=%D8%B9%D8%B8%D8%A7%D9%85+%D9%88%D9%85%D9%81%D8%A7%D8%B5%D9%84" class="quick-pill">🦴 عظام</a>
         <a href="search.html?specialty=%D8%A3%D8%B3%D9%86%D8%A7%D9%86" class="quick-pill">🦷 أسنان</a>
       </div>
-    </div><!-- /hero__search-wrap -->
-  </div><!-- /container -->
+    </div>
+  </div>
 </section>
 
 <!-- ===== Dynamic Sections ===== -->

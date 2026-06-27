@@ -1829,3 +1829,122 @@ button { font-family: inherit; }
   .hero__quick-pills { gap: 6px; }
   .quick-pill { font-size: 12px; padding: 4px 10px; }
 }
+
+/* =========================================================
+   DARK PALETTE — Blog & Reports Section
+   ========================================================= */
+.reports-section {
+  background: #0b1829 !important;
+  border-top: 1px solid rgba(255,255,255,0.04);
+}
+.reports-section .section-head__eyebrow { color: #5eead4; background: rgba(14,165,164,0.12); }
+.reports-section .section-head__title { color: white; }
+.reports-section .section-head__sub { color: rgba(255,255,255,0.55); }
+
+.report-card {
+  background: rgba(255,255,255,0.04) !important;
+  border-color: rgba(255,255,255,0.08) !important;
+}
+.report-card:hover {
+  box-shadow: 0 20px 50px rgba(14,165,164,0.12) !important;
+}
+.report-card__body { background: transparent; }
+.report-card__tag {
+  background: rgba(199,187,245,0.15) !important;
+  color: #c4b5fd !important;
+}
+.report-card__tag--green { background: rgba(22,163,74,0.15) !important; color: #4ade80 !important; }
+.report-card__tag--orange { background: rgba(234,88,12,0.15) !important; color: #fb923c !important; }
+.report-card__tag--red { background: rgba(225,29,72,0.15) !important; color: #f87171 !important; }
+.report-card__title { color: white !important; }
+.report-card__excerpt { color: rgba(255,255,255,0.5) !important; }
+.report-card__meta { border-top-color: rgba(255,255,255,0.07) !important; }
+.report-card__date { color: rgba(255,255,255,0.35) !important; }
+.report-card__link { color: #5eead4 !important; }
+.reports-section .btn--ghost {
+  border-color: rgba(255,255,255,0.18);
+  color: rgba(255,255,255,0.8);
+}
+.reports-section .btn--ghost:hover {
+  background: rgba(14,165,164,0.12);
+  color: #2dd4bf;
+  border-color: rgba(14,165,164,0.4);
+}
+
+/* Testimonials — already dark, just polish */
+.testimonials-section {
+  background: linear-gradient(135deg, #071628 0%, #0d2040 100%) !important;
+  border-top: 1px solid rgba(255,255,255,0.04);
+}
+
+/* How section SVG icons dark fix */
+.how-section .how-step__icon circle { fill: rgba(14,165,164,0.15); }
+
+/* App CTA dark polish */
+.app-cta-section {
+  background: linear-gradient(135deg, #071422 0%, #0a1c38 55%, #081628 100%) !important;
+}
+.app-cta-section::before {
+  background: radial-gradient(circle at 30% 50%, rgba(14,165,164,0.18) 0%, transparent 65%) !important;
+}
+.app-store-btn {
+  background: rgba(255,255,255,0.07) !important;
+  border-color: rgba(255,255,255,0.15) !important;
+}
+.app-store-btn:hover {
+  background: rgba(14,165,164,0.15) !important;
+  border-color: rgba(14,165,164,0.4) !important;
+}
+
+/* Scrollbar dark */
+::-webkit-scrollbar { width: 6px; }
+::-webkit-scrollbar-track { background: #0b1829; }
+::-webkit-scrollbar-thumb { background: rgba(14,165,164,0.4); border-radius: 3px; }
+::-webkit-scrollbar-thumb:hover { background: rgba(14,165,164,0.65); }
+
+/* Body dark background */
+body { background: #0b1829 !important; }
+
+/* =========================================================
+   NAVBAR — Dark glass to match new palette
+   ========================================================= */
+.navbar {
+  background: rgba(11, 24, 41, 0.88) !important;
+  border-bottom-color: rgba(255,255,255,0.07) !important;
+  backdrop-filter: blur(16px) !important;
+}
+.brand__name { color: white !important; }
+.nav-links__item { color: rgba(255,255,255,0.75) !important; }
+.nav-links__item:hover { color: #5eead4 !important; }
+.nav-links__item.is-active { color: white !important; }
+.btn--ghost {
+  color: rgba(255,255,255,0.8) !important;
+  border-color: rgba(255,255,255,0.15) !important;
+}
+.btn--ghost:hover {
+  background: rgba(14,165,164,0.1) !important;
+  color: #5eead4 !important;
+  border-color: rgba(14,165,164,0.35) !important;
+}
+.btn--primary {
+  background: linear-gradient(135deg, #0ea5a4, #0891b2) !important;
+  color: white !important;
+}
+
+/* Mega-menu dark */
+.mega-menu {
+  background: #0d1e33 !important;
+  border-bottom-color: rgba(255,255,255,0.06) !important;
+}
+.mega-menu__link { color: rgba(255,255,255,0.75) !important; }
+.mega-menu__link:hover { background: rgba(14,165,164,0.1) !important; color: #5eead4 !important; }
+
+/* Mobile menu dark */
+.mobile-menu { background: #0d1e33 !important; border-bottom-color: rgba(255,255,255,0.06) !important; }
+.mobile-menu__item { color: rgba(255,255,255,0.8) !important; border-bottom-color: rgba(255,255,255,0.06) !important; }
+.mobile-menu__item.is-active { color: #5eead4 !important; }
+.mobile-menu__login { color: #5eead4 !important; }
+.mobile-menu__specialties { background: rgba(14,165,164,0.07) !important; }
+
+/* Search bar stays white/light for contrast */
+.search-bar { background: white !important; }
